@@ -1,13 +1,13 @@
-package com.example.messagingstompwebsocket;
+package com.piano.server;
 
-public class HelloMessage {
+public class ChordSubmission {
 
     private String name;
 
-    public HelloMessage() {
+    public ChordSubmission() {
     }
 
-    public HelloMessage(String name) {
+    public ChordSubmission(String name) {
         this.name = name;
     }
 

@@ -1,4 +1,4 @@
-package com.example.messagingstompwebsocket;
+package com.piano.server;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

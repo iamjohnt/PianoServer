@@ -1,6 +1,6 @@
 package com.piano.server;
 
-public class ChordSubmission {
+public class Chord {
 
     private String name;
 

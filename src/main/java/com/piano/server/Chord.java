@@ -4,10 +4,10 @@ public class Chord {
 
     private String name;
 
-    public ChordSubmission() {
+    public Chord() {
     }
 
-    public ChordSubmission(String name) {
+    public Chord(String name) {
         this.name = name;
     }
 

@@ -1,14 +1,13 @@
-package com.piano.server;
+package com.piano.server.in;
 
 public class Hello {
 
     private String name;
+    private Integer age;
 
-    public Hello() {
-    }
-
-    public Hello(String name) {
+    public Hello(String name, Integer age) {
         this.name = name;
+        this.age = age;
     }
 
     public String getName() {
@@ -17,5 +16,13 @@ public class Hello {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

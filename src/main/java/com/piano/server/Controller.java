@@ -10,7 +10,7 @@ public class Controller {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public Response greeting(Chord message) throws Exception {
+    public Response greeting(Hello message) throws Exception {
         return new Response("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 

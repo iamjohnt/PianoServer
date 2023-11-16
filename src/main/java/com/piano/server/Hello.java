@@ -1,13 +1,13 @@
 package com.piano.server;
 
-public class Chord {
+public class Hello {
 
     private String name;
 
-    public Chord() {
+    public Hello() {
     }
 
-    public Chord(String name) {
+    public Hello(String name) {
         this.name = name;
     }
 

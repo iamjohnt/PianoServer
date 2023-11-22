@@ -1,13 +1,13 @@
 package com.piano.server.stomp;
 
-public class Response {
+public class TestResponse {
 
     private String content;
 
-    public Response() {
+    public TestResponse() {
     }
 
-    public Response(String content) {
+    public TestResponse(String content) {
         this.content = content;
     }
 

@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Chord {
+public class ChordSubmission {
 
     @JsonProperty("chord")
     private List<Integer> chord;
 
-    public Chord() {
+    public ChordSubmission() {
     }
 
-    public Chord(List<Integer> chord) {
+    public ChordSubmission(List<Integer> chord) {
         this.chord = chord;
     }
 

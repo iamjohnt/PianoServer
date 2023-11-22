@@ -1,11 +1,11 @@
 package com.piano.server.stomp;
 
-public class Hello {
+public class TestSubmission {
 
     private String name;
     private Integer age;
 
-    public Hello(String name, Integer age) {
+    public TestSubmission(String name, Integer age) {
         this.name = name;
         this.age = age;
     }

@@ -13,13 +13,13 @@ public class Controller {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public Response greeting(Hello message) throws Exception {
-        return new Response("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+    public TestResponse greeting(TestSubmission message) throws Exception {
+        return new TestResponse("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 
     @MessageMapping("/chord")
     @SendTo("/topic/chord")
-    public ChordResponse chordResponse(Chord message) throws Exception {
+    public ChordResponse chordResponse(ChordSubmission message) throws Exception {
         Timestamp ts = Timestamp.from(Instant.now());
         System.out.println(ts.toString() + " LOG: received chord --- " + message.getChord().toString());
         return new ChordResponse("dummy response");

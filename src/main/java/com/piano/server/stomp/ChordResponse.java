@@ -1,4 +1,4 @@
-package com.piano.server.out;
+package com.piano.server.stomp;
 
 public class ChordResponse {
 

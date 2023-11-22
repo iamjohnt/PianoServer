@@ -1,17 +1,11 @@
-package com.piano.server;
+package com.piano.server.stomp;
 
-import com.piano.server.in.Chord;
-import com.piano.server.in.Hello;
-import com.piano.server.out.ChordResponse;
-import com.piano.server.out.Response;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.util.HtmlUtils;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
 
 @org.springframework.stereotype.Controller
 public class Controller {

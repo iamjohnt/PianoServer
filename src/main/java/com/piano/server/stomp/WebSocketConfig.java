@@ -1,4 +1,4 @@
-package com.piano.server;
+package com.piano.server.stomp;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

@@ -1,4 +1,4 @@
-package com.piano.server.in;
+package com.piano.server.stomp;
 
 public class Hello {
 

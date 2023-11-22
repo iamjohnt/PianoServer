@@ -1,4 +1,4 @@
-package com.piano.server.in;
+package com.piano.server.stomp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

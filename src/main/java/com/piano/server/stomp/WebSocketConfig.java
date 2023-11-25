@@ -1,4 +1,4 @@
-package com.example.messagingstompwebsocket;
+package com.piano.server.stomp;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -9,6 +9,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    /**
+     * inbound messages -> /app/path_defined_in_controller
+     * outbound messages -> /topic/path_defined_in_controller
+     * connection request -> endpoint
+     */
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {

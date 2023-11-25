@@ -1,13 +1,13 @@
-package com.example.messagingstompwebsocket;
+package com.piano.server.stomp;
 
-public class Greeting {
+public class TestResponse {
 
     private String content;
 
-    public Greeting() {
+    public TestResponse() {
     }
 
-    public Greeting(String content) {
+    public TestResponse(String content) {
         this.content = content;
     }
 

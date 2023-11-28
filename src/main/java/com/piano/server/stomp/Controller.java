@@ -25,5 +25,11 @@ public class Controller {
         return new ChordResponse("dummy response");
     }
 
-
+    @MessageMapping("/settings")
+    @SendTo("/topic/chord")
+    public GameSettingsResponse chordResponse(GameSettingsSubmission message) throws Exception {
+        Timestamp ts = Timestamp.from(Instant.now());
+        System.out.println("\n" + ts.toString() + " LOG: received settings --- \n" + message.toString() + "\n");
+        return new GameSettingsResponse(true);
+    }
 }

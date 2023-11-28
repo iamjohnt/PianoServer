@@ -3,7 +3,11 @@ package com.piano.server;
 import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.MusicMakable;
 import com.piano.server.game.music.MusicMakerFactory;
+<<<<<<< HEAD
 import com.piano.server.game.music.MusicMakerFactoryConfig;
+=======
+import com.piano.server.game.music.Config;
+>>>>>>> settings
 import com.piano.server.game.util.ChordPool;
 import com.piano.server.game.util.KeySigMode;
 import com.piano.server.game.util.KeySigNote;
@@ -32,7 +36,7 @@ public class ConfigToSession {
         System.out.println("description: config -> session -> factory -> maker -> final music");
 
         // create music maker config
-        MusicMakerFactoryConfig config = new MusicMakerFactoryConfig(
+        Config config = new Config(
                 KeySigNote.C,
                 KeySigMode.MINOR,
                 ChordPool.TRIAD,

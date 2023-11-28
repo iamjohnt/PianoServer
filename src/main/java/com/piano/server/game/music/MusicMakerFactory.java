@@ -5,14 +5,14 @@ import com.piano.server.game.util.ChordPool;
 // based on config, output appropriate music generator
 public class MusicMakerFactory {
 
-    private MusicMakerFactoryConfig musicMakerFactoryConfig;
-    public MusicMakerFactory(MusicMakerFactoryConfig musicMakerFactoryConfig) {
-        this.musicMakerFactoryConfig = musicMakerFactoryConfig;
+    private Config config;
+    public MusicMakerFactory(Config config) {
+        this.config = config;
     }
 
     public MusicMakable getMusicMaker() {
         MusicMakable rtn = null;
-        ChordPool chordPool = musicMakerFactoryConfig.getChordPool();
+        ChordPool chordPool = config.getChordPool();
 
         switch (chordPool) {
             case TRIAD :

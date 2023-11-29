@@ -3,19 +3,34 @@ package com.piano.server.game.music;
 import com.piano.server.game.util.KeySigMode;
 import com.piano.server.game.util.KeySigNote;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class ChromaticNotesGenerator {
+public class ChromaticNotes {
 
     private final int LAST_NOTE_ON_PIANO = 108;
     private final int FIRST_NOTE_ON_PIANO = 21;
-    public ChromaticNotesGenerator() {
+    private List<Integer> chromaticNotes;
+    private Map<Integer, Integer> notePositionMap;
 
+    public ChromaticNotes(KeySigNote note, KeySigMode mode) {
+        this.chromaticNotes = getChromaticNotes(note, mode);
+        this.notePositionMap = mapNotesToArrayPosition(this.chromaticNotes);
     }
 
-    public List<Integer> getChromaticNotes(KeySigNote note, KeySigMode mode) {
+    public int getNotePosition(int note) {
+        int pos = notePositionMap.get(note);
+        return pos;
+    }
+
+    public int get(int position) {
+        return chromaticNotes.get(position);
+    }
+
+    public int size() {
+        return chromaticNotes.size();
+    }
+
+    private List<Integer> getChromaticNotes(KeySigNote note, KeySigMode mode) {
 
         int[] nextIntervals = new KeySignaturePatterns().getModePattern(mode);
         int startingNote = getFirstNoteOnPiano(note);
@@ -43,6 +58,14 @@ public class ChromaticNotesGenerator {
         }
 
         return chromaticNotes.stream().toList();
+    }
+
+    private Map<Integer, Integer> mapNotesToArrayPosition(List<Integer> listOfNotes) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < chromaticNotes.size(); i++) {
+            map.put(chromaticNotes.get(i), i);
+        }
+        return map;
     }
 
     private int getFirstNoteOnPiano(KeySigNote note) {

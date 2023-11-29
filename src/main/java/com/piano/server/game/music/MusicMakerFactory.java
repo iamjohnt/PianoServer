@@ -11,16 +11,20 @@ public class MusicMakerFactory {
     }
 
     public MusicMakable getMusicMaker() {
-        MusicMakable rtn = null;
-        ChordPool chordPool = config.getChordPool();
+        ChordPool pool = config.getChordPool();
+        MusicMakable musicMaker = null;
 
-        switch (chordPool) {
-            case TRIAD :
-                rtn = new MusicMakerTwoCMajorTriads();
-                break;
+        switch (pool) {
+            case NOTE -> musicMaker = new MusicMakerLevel1(config);
+//            case INTERVAL -> musicMaker = new MusicMakerLevel2(config);
+//            case TRIAD -> musicMaker = new MusicMakerLevel3(config);
+//            case TETRAD -> musicMaker = new MusicMakerLevel4(config);
+//            case NOTE_INTERVAL -> musicMaker = new MusicMakerLevel5(config);
+//            case NOTE_INTERVAL_TRIAD -> musicMaker = new MusicMakerLevel6(config);
+//            case NOTE_INTERVAL_TRIAD_TETRAD -> musicMaker = new MusicMakerLevel7(config);
         }
 
-        return rtn;
+        return musicMaker;
     }
 
 }

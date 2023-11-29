@@ -5,15 +5,15 @@ import com.piano.server.game.util.KeySigNote;
 
 import java.util.*;
 
-public class ChromaticNotes {
+public class ChromaticNotesList {
 
     private final int LAST_NOTE_ON_PIANO = 108;
     private final int FIRST_NOTE_ON_PIANO = 21;
     private List<Integer> chromaticNotes;
     private Map<Integer, Integer> notePositionMap;
 
-    public ChromaticNotes(KeySigNote note, KeySigMode mode) {
-        this.chromaticNotes = getChromaticNotes(note, mode);
+    public ChromaticNotesList(KeySigNote note, KeySigMode mode) {
+        this.chromaticNotes = calcChromaticNotes(note, mode);
         this.notePositionMap = mapNotesToArrayPosition(this.chromaticNotes);
     }
 
@@ -30,7 +30,7 @@ public class ChromaticNotes {
         return chromaticNotes.size();
     }
 
-    private List<Integer> getChromaticNotes(KeySigNote note, KeySigMode mode) {
+    private List<Integer> calcChromaticNotes(KeySigNote note, KeySigMode mode) {
 
         int[] nextIntervals = new KeySignaturePatterns().getModePattern(mode);
         int startingNote = getFirstNoteOnPiano(note);

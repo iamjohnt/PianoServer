@@ -11,23 +11,29 @@ import com.piano.server.game.util.WhichHands;
 import org.junit.jupiter.api.Test;
 
 import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MusicMakerFactoryTest {
 
     @Test
-    void from_config_to_music_sequence() {
+    void test_create_music_maker_within_bounds() {
 
         Deque<Chord> musicSeq = null;
 
-        System.out.println("======================================== testMusicMaker ========================================");
-        System.out.println("description: config -> session -> factory -> maker -> final music");
+        System.out.println("_____ test_create_music_maker_within_bounds _____");
 
         // create music maker config
         Config config = new Config(
                 KeySigNote.C,
                 KeySigMode.MAJOR,
                 ChordPool.NOTE,
-                WhichHands.BOTH
+                WhichHands.BOTH,
+                36,
+                38,
+                60,
+                64,
+                25
         );
 
         // based on config, create appropriate music maker
@@ -40,6 +46,21 @@ public class MusicMakerFactoryTest {
         //assert
         System.out.println(musicSeq.toString());
 
+        Set<Integer> correctPoolOfNotes = new HashSet();
+        correctPoolOfNotes.add(36);
+        correctPoolOfNotes.add(38);
+        correctPoolOfNotes.add(60);
+        correctPoolOfNotes.add(62);
+        correctPoolOfNotes.add(64);
+
+        boolean isNotesWithinBounds = true;
+        for (Chord note : musicSeq) {
+            int cur = note.getChord().stream().toList().get(0);
+            if (!correctPoolOfNotes.contains(cur)) {
+                isNotesWithinBounds = false;
+            }
+        }
+        assert (isNotesWithinBounds);
     }
 
 

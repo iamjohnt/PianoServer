@@ -91,14 +91,4 @@ public class MusicMakerRandomNote implements MusicMakable{
         this.note = config.getKeySigNote();
         this.mode = config.getKeySigMode();
     }
-
-    public MusicMakerRandomNote(ChromaticNotesList notePool, WhichHands whichHands, int lmin, int lmax, int rmin, int rmax, int length) {
-        this.notePool = notePool;
-        this.whichHands = whichHands;
-        this.lmin = lmin;
-        this.lmax = lmax;
-        this.rmin = rmin;
-        this.rmax = rmax;
-        this.length = length;
-    }
 }

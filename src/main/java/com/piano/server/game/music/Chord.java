@@ -27,6 +27,17 @@ public class Chord {
         return this.chord;
     }
 
+    public boolean isInBounds(int min, int max) {
+        List<Integer> notes = getChordList();
+        int bot = notes.get(0);
+        int top = notes.get(notes.size() - 1);
+        return
+            bot >= min &&
+            bot <= max &&
+            top >= min &&
+            top <= max;
+    }
+
     @Override
     public String toString() {
         String rtn = "";

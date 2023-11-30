@@ -60,4 +60,25 @@ public class ChordTest {
 
         assert (chords.contains(check));
     }
+
+    @Test
+    public void test_within_bounds() {
+        Chord chord = new Chord(60, 62, 70);
+        boolean expected = true;
+        boolean actual = chord.isInBounds(60, 70);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_out_of_bounds() {
+        Chord chord = new Chord(60, 62, 70);
+        boolean expected = true;
+        boolean actual = chord.isInBounds(61, 70);
+        assertNotEquals(expected, actual);
+
+        Chord chord1 = new Chord(60, 62, 70);
+        boolean expected1 = true;
+        boolean actual1 = chord.isInBounds(60, 69);
+        assertNotEquals(expected1, actual1);
+    }
 }

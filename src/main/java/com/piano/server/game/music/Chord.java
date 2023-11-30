@@ -1,6 +1,7 @@
 package com.piano.server.game.music;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Chord {
@@ -18,8 +19,12 @@ public class Chord {
         }
     }
 
-    public Set<Integer> getChord() {
-        return chord;
+    public List<Integer> getChordList() {
+        return this.chord.stream().sorted().toList();
+    }
+
+    public Set<Integer> getChordSet() {
+        return this.chord;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class Chord {
             return false;
         }
         Chord casted = (Chord) o;
-        return this.chord.equals(casted.getChord());
+        return this.chord.equals(casted.getChordSet());
     }
 
 

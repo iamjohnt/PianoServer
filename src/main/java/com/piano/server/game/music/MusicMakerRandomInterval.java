@@ -39,10 +39,10 @@ public class MusicMakerRandomInterval implements MusicMakable {
         }
         return music;    }
 
-    private Deque<Chord> generateBothHandMusic() {
+    private Deque<Chord> generateLeftHandMusic() {
         Deque<Chord> music = new LinkedList<>();
         for (int i = 0; i < length; i++) {
-            music.add(createRandomInterval(rmin, rmax));
+            music.add(createRandomInterval(lmin, lmax));
         }
         return music;
     }
@@ -55,7 +55,7 @@ public class MusicMakerRandomInterval implements MusicMakable {
         return music;
     }
 
-    private Deque<Chord> generateLeftHandMusic() {
+    private Deque<Chord> generateBothHandMusic() {
         int LEFT = 0;
         int RIGHT = 1;
         int curHand = Rand.getRandInclusiveBetween(LEFT, RIGHT);
@@ -75,9 +75,9 @@ public class MusicMakerRandomInterval implements MusicMakable {
 
     public Chord createRandomInterval(int min, int max) {
         // set bounds
-        int minRootPosition = notePool.getNotePosition(min);
-        int maxRootPosition = notePool.getNotePosition(max) - 1; // interval root must be at least 1 below max, so the second note can be at the max
-        int maxPosition = notePool.getNotePosition(max);
+        int minRootPosition = notePool.getNotePositionRoundedUp(min);
+        int maxRootPosition = notePool.getNotePositionRoundedDown(max) - 1; // interval root must be at least 1 below max, so the second note can be at the max
+        int maxPosition = notePool.getNotePositionRoundedDown(max);
 
         // get random root, and second note
         int rootPosition = Rand.getRandInclusiveBetween(minRootPosition, maxRootPosition);
@@ -91,8 +91,8 @@ public class MusicMakerRandomInterval implements MusicMakable {
         }
 
         return new Chord(
-                notePool.get(rootPosition),
-                notePool.get(secondNotePosition)
+            notePool.get(rootPosition),
+            notePool.get(secondNotePosition)
         );
     }
 

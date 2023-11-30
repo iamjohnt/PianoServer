@@ -59,6 +59,70 @@ public class MusicMakerRandomIntervalTest {
 
 
     @Test
+    public void test_interval_left_hands() {
+        config.setKeySigNote(KeySigNote.B)
+            .setKeySigMode(KeySigMode.MAJOR)
+            .setHands(WhichHands.LEFT)
+            .setLength(1)
+            .setLeftMin(23)
+            .setLeftMax(25)
+            .setRightMin(107)
+            .setRightMax(108);
+
+        MusicMakable maker = new MusicMakerRandomInterval(config);
+        Deque<Chord> music = maker.makeMusic();
+        Chord expected = new Chord(23, 25);
+        Chord actual = music.pop();
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void test_interval_right_hand() {
+        config.setKeySigNote(KeySigNote.F)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.RIGHT)
+                .setLength(1)
+                .setLeftMin(-1)
+                .setLeftMax(-1)
+                .setRightMin(65)
+                .setRightMax(67);
+
+        MusicMakable maker = new MusicMakerRandomInterval(config);
+        Deque<Chord> music = maker.makeMusic();
+        Chord expected = new Chord(65, 67);
+        Chord actual = music.pop();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_interval_both_hands() {
+        config.setKeySigNote(KeySigNote.D)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.BOTH)
+                .setLength(20)
+                .setLeftMin(30)
+                .setLeftMax(40)
+                .setRightMin(60)
+                .setRightMax(70);
+
+        MusicMakable maker = new MusicMakerRandomInterval(config);
+        Deque<Chord> music = maker.makeMusic();
+
+        boolean areIntervalsInBounds = true;
+        for (int i = 0; i < 20; i++) {
+            Chord chord = music.pop();
+            if (!chord.isInBounds(30, 40) && !chord.isInBounds(60, 70)) {
+                areIntervalsInBounds = false;
+            }
+        }
+        assertEquals(true, areIntervalsInBounds);
+    }
+
+
+
+
+    @Test
     public void test_interval_within_bounds() {
         config.setKeySigNote(KeySigNote.C)
             .setKeySigMode(KeySigMode.MINOR)

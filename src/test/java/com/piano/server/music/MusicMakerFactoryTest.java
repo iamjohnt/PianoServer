@@ -21,8 +21,6 @@ public class MusicMakerFactoryTest {
 
         Deque<Chord> musicSeq = null;
 
-        System.out.println("_____ test_create_music_maker_within_bounds _____");
-
         // create music maker config
         Config config = new Config(
                 KeySigNote.C,
@@ -33,7 +31,7 @@ public class MusicMakerFactoryTest {
                 38,
                 60,
                 64,
-                25
+                100
         );
 
         // based on config, create appropriate music maker
@@ -44,8 +42,6 @@ public class MusicMakerFactoryTest {
         musicSeq = maker.makeMusic();
 
         //assert
-        System.out.println(musicSeq.toString());
-
         Set<Integer> correctPoolOfNotes = new HashSet();
         correctPoolOfNotes.add(36);
         correctPoolOfNotes.add(38);

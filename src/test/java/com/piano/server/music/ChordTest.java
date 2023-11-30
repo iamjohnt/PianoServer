@@ -3,7 +3,9 @@ package com.piano.server.music;
 import com.piano.server.game.music.Chord;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,5 +48,16 @@ public class ChordTest {
         Chord actual = new Chord(21, 22, 22);
         Chord expected = new Chord(21, 22);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_chord_list_contains_method_works() {
+        List<Chord> chords = new ArrayList<>();
+        chords.add(new Chord(21, 22, 23));
+        chords.add(new Chord(100, 101, 102));
+
+        Chord check = new Chord(23, 22, 21);
+
+        assert (chords.contains(check));
     }
 }

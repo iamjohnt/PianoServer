@@ -15,8 +15,8 @@ public class MusicMakerFactory {
         MusicMakable musicMaker = null;
 
         switch (pool) {
-            case NOTE -> musicMaker = new MusicMakerLevel1(config);
-//            case INTERVAL -> musicMaker = new MusicMakerLevel2(config);
+            case NOTE -> musicMaker = new MusicMakerRandomNote(config);
+            case INTERVAL -> musicMaker = new MusicMakerLevel2(config);
 //            case TRIAD -> musicMaker = new MusicMakerLevel3(config);
 //            case TETRAD -> musicMaker = new MusicMakerLevel4(config);
 //            case NOTE_INTERVAL -> musicMaker = new MusicMakerLevel5(config);
@@ -24,6 +24,11 @@ public class MusicMakerFactory {
 //            case NOTE_INTERVAL_TRIAD_TETRAD -> musicMaker = new MusicMakerLevel7(config);
         }
 
+
+        /*
+        if level one,
+            music maker = new MusicMaker(
+        * */
         return musicMaker;
     }
 

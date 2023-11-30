@@ -18,6 +18,9 @@ public class Config {
     private int rightMax;
     private int length = 25;
 
+    public Config() {
+    }
+
     public Config(KeySigNote keySigNote, KeySigMode keySigMode, ChordPool chordPool, WhichHands hands, int leftMin, int leftMax, int rightMin, int rightMax, int length) {
         this.keySigNote = keySigNote;
         this.keySigMode = keySigMode;
@@ -79,5 +82,50 @@ public class Config {
 
     public int getRightMax() {
         return rightMax;
+    }
+
+    public Config setKeySigNote(KeySigNote keySigNote) {
+        this.keySigNote = keySigNote;
+        return this;
+    }
+
+    public Config setKeySigMode(KeySigMode keySigMode) {
+        this.keySigMode = keySigMode;
+        return this;
+    }
+
+    public Config setChordPool(ChordPool chordPool) {
+        this.chordPool = chordPool;
+        return this;
+    }
+
+    public Config setHands(WhichHands hands) {
+        this.hands = hands;
+        return this;
+    }
+
+    public Config setLeftMin(int leftMin) {
+        this.leftMin = leftMin;
+        return this;
+    }
+
+    public Config setLeftMax(int leftMax) {
+        this.leftMax = leftMax;
+        return this;
+    }
+
+    public Config setRightMin(int rightMin) {
+        this.rightMin = rightMin;
+        return this;
+    }
+
+    public Config setRightMax(int rightMax) {
+        this.rightMax = rightMax;
+        return this;
+    }
+
+    public Config setLength(int length) {
+        this.length = length;
+        return this;
     }
 }

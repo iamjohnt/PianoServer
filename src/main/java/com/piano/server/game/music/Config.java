@@ -33,21 +33,6 @@ public class Config {
         this.length = length;
     }
 
-    public Config(KeySigNote note, KeySigMode mode, ChordPool chordPool, WhichHands hands, int length) {
-        this.keySigNote = note;
-        this.keySigMode = mode;
-        this.chordPool = chordPool;
-        this.hands = hands;
-        this.length = length;
-    }
-
-    public Config(KeySigNote note, KeySigMode mode, ChordPool chordPool, WhichHands hands) {
-        this.keySigNote = note;
-        this.keySigMode = mode;
-        this.chordPool = chordPool;
-        this.hands = hands;
-    }
-
     public KeySigNote getKeySigNote() {
         return keySigNote;
     }

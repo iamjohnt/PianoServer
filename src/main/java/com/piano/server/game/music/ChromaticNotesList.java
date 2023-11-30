@@ -22,6 +22,22 @@ public class ChromaticNotesList {
         return pos;
     }
 
+    public int getNotePositionRoundedDown(int note) {
+        if (notePositionMap.containsKey(note)) {
+            return notePositionMap.get(note);
+        } else {
+            return notePositionMap.get(note - 1);
+        }
+    }
+
+    public int getNotePositionRoundedUp(int note) {
+        if (notePositionMap.containsKey(note)) {
+            return notePositionMap.get(note);
+        } else {
+            return notePositionMap.get(note + 1);
+        }
+    }
+
     public int get(int position) {
         return chromaticNotes.get(position);
     }

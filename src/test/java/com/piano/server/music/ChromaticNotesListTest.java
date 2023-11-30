@@ -9,7 +9,27 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ChromaticNotesListTest {
+
+    @Test
+    public void test_get_note_position_rounded_down() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.A_SHARP, KeySigMode.MINOR);
+        int input = 33;
+        int expected = 6;
+        int actual = chromaticNotesList.getNotePositionRoundedDown(input);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_get_note_position_rounded_up() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.B_FLAT, KeySigMode.MAJOR);
+        int input = 23;
+        int expected = 1;
+        int actual = chromaticNotesList.getNotePositionRoundedDown(input);
+        assertEquals(expected, actual);
+    }
 
     @Test
     public void test_generate_c_major_notes() {

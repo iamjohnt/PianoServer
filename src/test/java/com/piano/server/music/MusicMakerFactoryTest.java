@@ -51,7 +51,7 @@ public class MusicMakerFactoryTest {
 
         boolean isNotesWithinBounds = true;
         for (Chord note : musicSeq) {
-            int cur = note.getChord().stream().toList().get(0);
+            int cur = note.getChordList().stream().toList().get(0);
             if (!correctPoolOfNotes.contains(cur)) {
                 isNotesWithinBounds = false;
             }

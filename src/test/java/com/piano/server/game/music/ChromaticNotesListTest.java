@@ -30,6 +30,15 @@ public class ChromaticNotesListTest {
     }
 
     @Test
+    public void test_getting_something_thats_not_chromatic() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.C_SHARP, KeySigMode.MINOR);
+        int noteNotInCSharpMajor = 60;
+        int expected = -1;
+        int actual = chromaticNotesList.getPositionByNote(noteNotInCSharpMajor);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void test_generate_c_major_notes() {
         System.out.println("_____ test_generate_C_major_notes _____");
 

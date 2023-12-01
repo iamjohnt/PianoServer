@@ -2,24 +2,36 @@ package com.piano.server.game.music;
 
 import com.piano.server.game.util.KeySigMode;
 import com.piano.server.game.util.KeySigNote;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class ChromaticNotesList {
 
+    private Logger log;
     private final int LAST_NOTE_ON_PIANO = 108;
     private final int FIRST_NOTE_ON_PIANO = 21;
     private List<Integer> chromaticNotes;
     private Map<Integer, Integer> notePositionMap;
+    private KeySigNote keySigNote;
+    private KeySigMode keySigMode;
 
     public ChromaticNotesList(KeySigNote note, KeySigMode mode) {
-        this.chromaticNotes = calcChromaticNotes(note, mode);
+        this.log = LoggerFactory.getLogger(ChromaticNotesList.class);
+        this.keySigNote = note;
+        this.keySigMode = mode;
+        this.chromaticNotes = calcChromaticNotes(this.keySigNote, this.keySigMode);
         this.notePositionMap = mapNotesToArrayPosition(this.chromaticNotes);
     }
 
     public int getPositionByNote(int note) {
-        int pos = notePositionMap.get(note);
-        return pos;
+        try {
+            return notePositionMap.get(note);
+        } catch (NullPointerException e) {
+            log.error(Integer.toString(note) + " is not a note present in key signature " + keySigNote + " " + keySigMode + " : " + notePositionMap.toString());
+            return -1;
+        }
     }
 
     public int getPositionByNoteRoundedDown(int note) {

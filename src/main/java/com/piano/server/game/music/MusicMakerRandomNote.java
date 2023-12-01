@@ -74,10 +74,10 @@ public class MusicMakerRandomNote implements MusicMakable{
     }
 
     private Chord createRandomNote(int min, int max) {
-        int minNotePosition = notePool.getNotePosition(min);
-        int maxNotePosition = notePool.getNotePosition(max);
+        int minNotePosition = notePool.getPositionByNote(min);
+        int maxNotePosition = notePool.getPositionByNote(max);
         int randNotePosition = Rand.getRandInclusiveBetween(minNotePosition, maxNotePosition);
-        int randNote = notePool.get(randNotePosition);
+        int randNote = notePool.getNoteByPosition(randNotePosition);
         return new Chord(randNote);
     }
 

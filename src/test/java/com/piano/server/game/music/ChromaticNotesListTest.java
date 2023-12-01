@@ -1,7 +1,5 @@
 package com.piano.server.game.music;
 
-import com.piano.server.game.music.Chord;
-import com.piano.server.game.music.ChromaticNotesList;
 import com.piano.server.game.util.KeySigMode;
 import com.piano.server.game.util.KeySigNote;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,7 @@ public class ChromaticNotesListTest {
         ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.A_SHARP, KeySigMode.MINOR);
         int input = 33;
         int expected = 6;
-        int actual = chromaticNotesList.getNotePositionRoundedDown(input);
+        int actual = chromaticNotesList.getPositionByNoteRoundedDown(input);
         assertEquals(expected, actual);
     }
 
@@ -27,7 +25,7 @@ public class ChromaticNotesListTest {
         ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.B_FLAT, KeySigMode.MAJOR);
         int input = 23;
         int expected = 1;
-        int actual = chromaticNotesList.getNotePositionRoundedDown(input);
+        int actual = chromaticNotesList.getPositionByNoteRoundedDown(input);
         assertEquals(expected, actual);
     }
 
@@ -93,7 +91,7 @@ public class ChromaticNotesListTest {
 
         boolean isCorrect = true;
         for (int i = 0; i < actual.size(); i++) {
-            if (expected.get(i).equals(actual.get(i))) {
+            if (expected.get(i).equals(actual.getNoteByPosition(i))) {
                 isCorrect = false;
             }
         }
@@ -162,7 +160,7 @@ public class ChromaticNotesListTest {
 
         boolean isCorrect = true;
         for (int i = 0; i < actual.size(); i++) {
-            if (expected.get(i).equals(actual.get(i))) {
+            if (expected.get(i).equals(actual.getNoteByPosition(i))) {
                 isCorrect = false;
             }
         }
@@ -231,7 +229,7 @@ public class ChromaticNotesListTest {
 
         boolean isCorrect = true;
         for (int i = 0; i < actual.size(); i++) {
-            if (expected.get(i).equals(actual.get(i))) {
+            if (expected.get(i).equals(actual.getNoteByPosition(i))) {
                 isCorrect = false;
             }
         }
@@ -300,7 +298,7 @@ public class ChromaticNotesListTest {
         expected.add(new Chord(108));
         boolean isCorrect = true;
         for (int i = 0; i < actual.size(); i++) {
-            if (expected.get(i).equals(actual.get(i))) {
+            if (expected.get(i).equals(actual.getNoteByPosition(i))) {
                 isCorrect = false;
             }
         }
@@ -369,7 +367,7 @@ public class ChromaticNotesListTest {
 
         boolean isCorrect = true;
         for (int i = 0; i < actual.size(); i++) {
-            if (expected.get(i).equals(actual.get(i))) {
+            if (expected.get(i).equals(actual.getNoteByPosition(i))) {
                 isCorrect = false;
             }
         }

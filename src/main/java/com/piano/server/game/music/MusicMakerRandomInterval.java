@@ -75,9 +75,9 @@ public class MusicMakerRandomInterval implements MusicMakable {
 
     public Chord createRandomInterval(int min, int max) {
         // set bounds
-        int minRootPosition = notePool.getNotePositionRoundedUp(min);
-        int maxRootPosition = notePool.getNotePositionRoundedDown(max) - 1; // interval root must be at least 1 below max, so the second note can be at the max
-        int maxPosition = notePool.getNotePositionRoundedDown(max);
+        int minRootPosition = notePool.getPositionByNoteRoundedUp(min);
+        int maxRootPosition = notePool.getPositionByNoteRoundedDown(max) - 1; // interval root must be at least 1 below max, so the second note can be at the max
+        int maxPosition = notePool.getPositionByNoteRoundedDown(max);
 
         // get random root, and second note
         int rootPosition = Rand.getRandInclusiveBetween(minRootPosition, maxRootPosition);
@@ -91,8 +91,8 @@ public class MusicMakerRandomInterval implements MusicMakable {
         }
 
         return new Chord(
-            notePool.get(rootPosition),
-            notePool.get(secondNotePosition)
+            notePool.getNoteByPosition(rootPosition),
+            notePool.getNoteByPosition(secondNotePosition)
         );
     }
 

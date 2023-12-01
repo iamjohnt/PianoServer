@@ -17,12 +17,12 @@ public class ChromaticNotesList {
         this.notePositionMap = mapNotesToArrayPosition(this.chromaticNotes);
     }
 
-    public int getNotePosition(int note) {
+    public int getPositionByNote(int note) {
         int pos = notePositionMap.get(note);
         return pos;
     }
 
-    public int getNotePositionRoundedDown(int note) {
+    public int getPositionByNoteRoundedDown(int note) {
         if (notePositionMap.containsKey(note)) {
             return notePositionMap.get(note);
         } else {
@@ -30,7 +30,7 @@ public class ChromaticNotesList {
         }
     }
 
-    public int getNotePositionRoundedUp(int note) {
+    public int getPositionByNoteRoundedUp(int note) {
         if (notePositionMap.containsKey(note)) {
             return notePositionMap.get(note);
         } else {
@@ -38,7 +38,7 @@ public class ChromaticNotesList {
         }
     }
 
-    public int get(int position) {
+    public int getNoteByPosition(int position) {
         return chromaticNotes.get(position);
     }
 

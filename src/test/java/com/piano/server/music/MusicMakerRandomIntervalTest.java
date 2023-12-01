@@ -126,6 +126,7 @@ public class MusicMakerRandomIntervalTest {
     public void test_interval_within_bounds() {
         config.setKeySigNote(KeySigNote.C)
             .setKeySigMode(KeySigMode.MINOR)
+            .setHands(WhichHands.BOTH)
             .setLength(500)
             .setLeftMin(36)
             .setLeftMax(48)

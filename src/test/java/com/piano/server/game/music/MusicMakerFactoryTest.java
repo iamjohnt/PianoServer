@@ -1,4 +1,4 @@
-package com.piano.server.music;
+package com.piano.server.game.music;
 
 import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.MusicMakable;

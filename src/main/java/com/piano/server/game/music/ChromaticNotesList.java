@@ -48,7 +48,7 @@ public class ChromaticNotesList {
 
     private List<Integer> calcChromaticNotes(KeySigNote note, KeySigMode mode) {
 
-        int[] nextIntervals = new KeySignaturePatterns().getModePattern(mode);
+        int[] nextIntervals = new ModePatterns().getModePattern(mode);
         int startingNote = getFirstNoteOnPiano(note);
         int curNote = startingNote;
         int curInterval = 0;

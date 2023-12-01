@@ -2,7 +2,7 @@ package com.piano.server.game.music;
 
 import com.piano.server.game.util.KeySigMode;
 
-public class KeySignaturePatterns {
+public class ModePatterns {
 
     int[] getModePattern(KeySigMode mode) {
         int half = 1;

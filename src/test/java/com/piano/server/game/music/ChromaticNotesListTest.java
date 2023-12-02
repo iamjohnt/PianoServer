@@ -53,6 +53,16 @@ public class ChromaticNotesListTest {
     }
 
     @Test
+    public void test_get_base_note_from_interval() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.G_SHARP, KeySigMode.MAJOR);
+        int G_SHARP = 56;
+        int C = 60;
+        int expected = C;
+        int actual = chromaticNotesList.getNoteFromInterval(G_SHARP, 3);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void test_generate_c_major_notes() {
         System.out.println("_____ test_generate_C_major_notes _____");
 

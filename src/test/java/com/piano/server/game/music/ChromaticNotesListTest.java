@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChromaticNotesListTest {
 
@@ -36,6 +36,20 @@ public class ChromaticNotesListTest {
         int expected = -1;
         int actual = chromaticNotesList.getPositionByNote(noteNotInCSharpMajor);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_contains_note() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.F_SHARP, KeySigMode.MINOR);
+        int F_SHARP = 66;
+        assertTrue(chromaticNotesList.containsNote(F_SHARP));
+    }
+
+    @Test
+    public void test_does_not_contain_note() {
+        ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.G_FLAT, KeySigMode.MINOR);
+        int G = 67;
+        assertFalse(chromaticNotesList.containsNote(G));
     }
 
     @Test

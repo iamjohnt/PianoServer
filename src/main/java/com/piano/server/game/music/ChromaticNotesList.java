@@ -58,6 +58,10 @@ public class ChromaticNotesList {
         return chromaticNotes.size();
     }
 
+    public boolean containsNote(int note) {
+        return notePositionMap.containsKey(note);
+    }
+
     private List<Integer> calcChromaticNotes(KeySigNote note, KeySigMode mode) {
 
         int[] nextIntervals = new ModePatterns().getModePattern(mode);

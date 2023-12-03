@@ -22,5 +22,7 @@ public class ChordMakerGroup {
         return chordMakers.get(index);
     }
 
-
+    public List<ChordMaker> getChordMakers() {
+        return chordMakers;
+    }
 }

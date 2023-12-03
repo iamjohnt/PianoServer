@@ -4,20 +4,24 @@ import java.util.List;
 
 public class ChordMakerPool {
 
-    private List<ChordMakerGroup> groups;
+    private List<ChordMakerGroup> chordMakerGroups;
 
-    public ChordMakerPool(List<ChordMakerGroup> groups) {
-        this.groups = groups;
+    public ChordMakerPool(List<ChordMakerGroup> chordMakerGroups) {
+        this.chordMakerGroups = chordMakerGroups;
     }
 
     public ChordMakerPool() {
     }
 
     public void addChordMakerGroup(ChordMakerGroup group) {
-        this.groups.add(group);
+        this.chordMakerGroups.add(group);
     }
 
     public ChordMakerGroup getChordMakerGroup(int index) {
-        return this.groups.get(index);
+        return this.chordMakerGroups.get(index);
+    }
+
+    public List<ChordMakerGroup> getChordMakerGroups() {
+        return chordMakerGroups;
     }
 }

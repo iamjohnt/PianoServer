@@ -40,11 +40,7 @@ public class Chord {
 
     @Override
     public String toString() {
-        String rtn = "";
-        for (Integer note : chord) {
-            rtn += note.toString() + " ";
-        }
-        return rtn;
+        return getChordList().toString();
     }
 
     @Override

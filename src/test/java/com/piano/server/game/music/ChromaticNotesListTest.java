@@ -33,9 +33,12 @@ public class ChromaticNotesListTest {
     public void test_getting_something_thats_not_chromatic() {
         ChromaticNotesList chromaticNotesList = new ChromaticNotesList(KeySigNote.C_SHARP, KeySigMode.MINOR);
         int noteNotInCSharpMajor = 60;
-        int expected = -1;
-        int actual = chromaticNotesList.getPositionByNote(noteNotInCSharpMajor);
-        assertEquals(expected, actual);
+
+        Throwable exception = assertThrows(NoteOutOfBoundsException.class,
+                () -> chromaticNotesList.getPositionByNote(noteNotInCSharpMajor)
+        );
+        assertTrue(exception instanceof NoteOutOfBoundsException);
+
     }
 
     @Test
@@ -58,7 +61,12 @@ public class ChromaticNotesListTest {
         int G_SHARP = 56;
         int C = 60;
         int expected = C;
-        int actual = chromaticNotesList.getNoteFromInterval(G_SHARP, 2);
+        int actual = -1;
+        try {
+            actual = chromaticNotesList.getNoteFromInterval(G_SHARP, 2);
+        } catch (NoteOutOfBoundsException e) {
+            e.printStackTrace();
+        }
         assertEquals(expected, actual);
     }
 

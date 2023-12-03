@@ -7,7 +7,7 @@ public class ChordPattern {
     private static final int OCT = 7;
     
     // note
-    public static final int[] NOTE = new int[] {1};
+    public static final int[] NOTE = new int[] {0};
     
     // intervals
     public static final int[] INTERVAL_SECOND = new int[] {0,1};
@@ -24,13 +24,13 @@ public class ChordPattern {
     public static final int[] TRIAD_SUS_4 = new int[] {0,3,4};
     
     // triad inversions
-    public static final int[] TRIAD_INVERSION_2_UP = new int[] {2,5,0+OCT};
-    public static final int[] TRIAD_INVERSION_2_DOWN = new int[] {2-OCT,5-OCT,0};
+    public static final int[] TRIAD_INVERSION_2_UP = new int[] {2,4,0+OCT};
+    public static final int[] TRIAD_INVERSION_2_DOWN = new int[] {2-OCT,4-OCT,0};
     public static final int[] TRIAD_INVERSION_3_UP = new int[] {4,0+OCT,2+OCT};
     public static final int[] TRIAD_INVERSION_3_DOWN = new int[] {4-OCT,0,2};
 
     // tetrads
     public static final int[] TETRAD = new int[] {0,2,4,0+OCT};
-    public static final int[] TETRAD_INVERTED = new int[] {5-OCT,0,2,4};
+    public static final int[] TETRAD_INVERTED = new int[] {4-OCT,0,2,4};
     public static final int[] TETRAD_SEVENTH = new int[] {0,2,4,6};
 }

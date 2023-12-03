@@ -29,7 +29,7 @@ public class ChordTest {
     @Test
     public void test_to_string() {
         Chord chord = new Chord(21, 22);
-        assertEquals(chord.toString(), "21 22 ");
+        assertEquals("[21, 22]", chord.toString());
     }
 
 

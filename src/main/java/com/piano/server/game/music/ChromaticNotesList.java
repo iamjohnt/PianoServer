@@ -35,8 +35,7 @@ public class ChromaticNotesList {
     }
 
     public int getNoteFromInterval(int baseNote, int interval) {
-        // within a scale in music theory, each position is identified by a number, 1 - 7, not 0 - 6. Therefore we need ot subtract the interval by 1
-        int distFromBaseNote = interval - 1;
+        int distFromBaseNote = interval;
         int position = getPositionByNote(baseNote);
         int intervalNotePosition =  position + distFromBaseNote;
         return getNoteByPosition(intervalNotePosition);

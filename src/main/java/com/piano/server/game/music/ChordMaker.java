@@ -43,7 +43,11 @@ public class ChordMaker {
 
         for (int i = 0; i < chordNotes.length; i++) {
             int offset = chordPattern[i];
-            chordNotes[i] = notePool.getNoteFromInterval(root, offset);
+            try {
+                chordNotes[i] = notePool.getNoteFromInterval(root, offset);
+            } catch (NoteOutOfBoundsException e) {
+                e.printStackTrace();
+            }
         }
         return new Chord(chordNotes);
     }

@@ -25,16 +25,17 @@ public class ChromaticNotesList {
         this.notePositionMap = mapNotesToArrayPosition(this.chromaticNotes);
     }
 
-    public int getPositionByNote(int note) {
+    public int getPositionByNote(int note) throws NoteOutOfBoundsException {
         try {
             return notePositionMap.get(note);
         } catch (NullPointerException e) {
-            log.error(Integer.toString(note) + " is not a note present in key signature " + keySigNote + " " + keySigMode + " : " + notePositionMap.toString());
-            return -1;
+            String error = Integer.toString(note) + " is not a note present in key signature " + keySigNote + " " + keySigMode + " : " + notePositionMap.toString();
+            log.error(error);
+            throw new NoteOutOfBoundsException(error);
         }
     }
 
-    public int getNoteFromInterval(int baseNote, int interval) {
+    public int getNoteFromInterval(int baseNote, int interval) throws NoteOutOfBoundsException {
         int distFromBaseNote = interval;
         int position = getPositionByNote(baseNote);
         int intervalNotePosition =  position + distFromBaseNote;

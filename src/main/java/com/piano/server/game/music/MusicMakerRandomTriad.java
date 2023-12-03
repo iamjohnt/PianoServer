@@ -79,8 +79,8 @@ public class MusicMakerRandomTriad implements MusicMakable {
 
         int randRootPosition = Rand.getRandInclusiveBetween(minPosition, maxPosition);
         int root = notePool.getNoteByPosition(randRootPosition);
-        int note2 = notePool.getNoteFromInterval(root, 3);
-        int note3 = notePool.getNoteFromInterval(root, 5);
+        int note2 = notePool.getNoteFromInterval(root, 2);
+        int note3 = notePool.getNoteFromInterval(root, 4);
         return new Chord(root, note2, note3);
     }
 

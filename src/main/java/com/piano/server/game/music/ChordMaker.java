@@ -4,12 +4,14 @@ public class ChordMaker {
 
     private ChromaticNotesList notePool;
     private int[] chordPattern;
+    private int chordNoteCount;
     private int topNoteDistanceFromRoot;
     private int botNoteDistanceFromRoot;
 
     public ChordMaker(ChromaticNotesList notePool, int[] chordPattern) {
         this.notePool = notePool;
         this.chordPattern = chordPattern;
+        this.chordNoteCount = chordPattern.length;
 
         topNoteDistanceFromRoot = getTopNoteDistanceFromRoot(chordPattern);
         botNoteDistanceFromRoot = getBotNoteDistanceFromRoot(chordPattern);
@@ -52,5 +54,9 @@ public class ChordMaker {
 
     public int getBotNoteDistanceFromRoot() {
         return botNoteDistanceFromRoot;
+    }
+
+    public int getChordNoteCount() {
+        return chordNoteCount;
     }
 }

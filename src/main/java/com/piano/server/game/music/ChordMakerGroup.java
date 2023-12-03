@@ -1,5 +1,6 @@
 package com.piano.server.game.music;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChordMakerGroup {
@@ -11,7 +12,7 @@ public class ChordMakerGroup {
     }
 
     public ChordMakerGroup() {
-        this.chordMakers = chordMakers;
+        this.chordMakers = new ArrayList<>();
     }
 
     public void addChordMaker(ChordMaker chordMaker) {

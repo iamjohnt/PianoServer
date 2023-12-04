@@ -38,6 +38,10 @@ public class Chord {
             top <= max;
     }
 
+    public int getLength() {
+        return chord.size();
+    }
+
     @Override
     public String toString() {
         return getChordList().toString();

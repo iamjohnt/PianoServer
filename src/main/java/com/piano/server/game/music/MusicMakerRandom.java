@@ -14,7 +14,6 @@ public class MusicMakerRandom implements MusicMakable {
 
     private final int LEFT = 0;
     private final int RIGHT = 1;
-    private ChromaticNotesList notePool;
     private WhichHands whichHands;
     private KeySigNote note;
     private KeySigMode mode;
@@ -28,7 +27,6 @@ public class MusicMakerRandom implements MusicMakable {
 
     public MusicMakerRandom(Config config) {
         this.handPool = new ArrayList<>();
-        extractConfigToVars(config);
     }
 
     public MusicMakerRandom() {
@@ -55,56 +53,85 @@ public class MusicMakerRandom implements MusicMakable {
 
     private Chord createRandomChord(int min, int max) {
 
-        // setup chord maker pool
         ChordMakerGroup randChordMakerGroup = Rand.getRandomElement(chordMakerPool.getChordMakerGroups());
         ChordMaker randChordMaker = Rand.getRandomElement(randChordMakerGroup.getChordMakers());
 
+        ChromaticNotesList chromaticNotePool = randChordMaker.getNotePool();
+
         // adjust the min and max positions, so i can fit the chord properly
-        int minPosition = -12345;
-        int maxPosition = -12345;
-        try {
-            minPosition = notePool.getPositionByNote(min);
-            maxPosition = notePool.getPositionByNote(max);
-        } catch (NoteOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+        int minPosition = chromaticNotePool.getPositionByNoteRoundedUp(min);
+        int maxPosition = chromaticNotePool.getPositionByNoteRoundedDown(max);
+
         int adjustedMinPosition = minPosition + randChordMaker.getBotNotePositionDistanceFromRoot();
         int adjustedMaxPosition = maxPosition - randChordMaker.getTopNotePositionDistanceFromRoot();
 
         // get a random position between the adjusted min and max, and get the note from that position
         int randRootPosition = Rand.getRandInclusiveBetween(adjustedMinPosition, adjustedMaxPosition);
-        int randRoot = notePool.getNoteByPosition(randRootPosition);
+        int randRoot = chromaticNotePool.getNoteByPosition(randRootPosition);
 
         // create a chord by passing that random note as the root
         Chord chord = randChordMaker.createChord(randRoot);
         return chord;
-
     }
 
-    public void setChordMakerPool(ChordMakerPool chordMakerPool) {
+
+    public MusicMakerRandom setChordMakerPool(ChordMakerPool chordMakerPool) {
         this.chordMakerPool = chordMakerPool;
+        return this;
     }
 
-    private void extractConfigToVars(Config config) {
-        this.notePool = new ChromaticNotesList(
-                config.getKeySigNote(),
-                config.getKeySigMode()
-        );
-        if (config.getHands() == WhichHands.LEFT) {
+    public MusicMakerRandom setWhichHands(WhichHands whichHands) {
+        this.whichHands = whichHands;
+        int LEFT = 0;
+        int RIGHT = 1;
+        if (whichHands == WhichHands.LEFT) {
             handPool.add(LEFT);
-        } else if (config.getHands() == WhichHands.RIGHT) {
+        } else if (whichHands == WhichHands.RIGHT) {
             handPool.add(RIGHT);
         } else {
-            handPool.add(LEFT, RIGHT);
+            handPool.add(LEFT);
+            handPool.add(RIGHT);
         }
+        return this;
+    }
 
-        this.whichHands = config.getHands();
-        this.lmin = config.getLeftMin();
-        this.lmax = config.getLeftMax();
-        this.rmin = config.getRightMin();
-        this.rmax = config.getRightMax();
-        this.length = config.getLength();
-        this.note = config.getKeySigNote();
-        this.mode = config.getKeySigMode();
+    public MusicMakerRandom setNote(KeySigNote note) {
+        this.note = note;
+        return this;
+    }
+
+    public MusicMakerRandom setMode(KeySigMode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+    public MusicMakerRandom setLmin(int lmin) {
+        this.lmin = lmin;
+        return this;
+    }
+
+    public MusicMakerRandom setLmax(int lmax) {
+        this.lmax = lmax;
+        return this;
+    }
+
+    public MusicMakerRandom setRmin(int rmin) {
+        this.rmin = rmin;
+        return this;
+    }
+
+    public MusicMakerRandom setRmax(int rmax) {
+        this.rmax = rmax;
+        return this;
+    }
+
+    public MusicMakerRandom setLength(int length) {
+        this.length = length;
+        return this;
+    }
+
+    public MusicMakerRandom setHandPool(List<Integer> handPool) {
+        this.handPool = handPool;
+        return this;
     }
 }

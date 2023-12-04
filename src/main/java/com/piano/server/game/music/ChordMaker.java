@@ -13,11 +13,11 @@ public class ChordMaker {
         this.chordPattern = chordPattern;
         this.chordNoteCount = chordPattern.length;
 
-        topNoteDistanceFromRoot = getTopNoteDistanceFromRoot(chordPattern);
-        botNoteDistanceFromRoot = getBotNoteDistanceFromRoot(chordPattern);
+        topNoteDistanceFromRoot = getTopNotePositionDistanceFromRoot(chordPattern);
+        botNoteDistanceFromRoot = getBotNotePositionDistanceFromRoot(chordPattern);
     }
 
-    private int getTopNoteDistanceFromRoot(int[] chordPattern) {
+    private int getTopNotePositionDistanceFromRoot(int[] chordPattern) {
         int curMax = Integer.MIN_VALUE;
         for (int curNote : chordPattern) {
             if (curNote > curMax) {
@@ -27,7 +27,7 @@ public class ChordMaker {
         return curMax;
     }
 
-    private int getBotNoteDistanceFromRoot(int[] chordPattern) {
+    private int getBotNotePositionDistanceFromRoot(int[] chordPattern) {
         int curMin = Integer.MAX_VALUE;
         for (int curNote : chordPattern) {
             if (curNote < curMin) {
@@ -52,11 +52,11 @@ public class ChordMaker {
         return new Chord(chordNotes);
     }
 
-    public int getTopNoteDistanceFromRoot() {
+    public int getTopNotePositionDistanceFromRoot() {
         return topNoteDistanceFromRoot;
     }
 
-    public int getBotNoteDistanceFromRoot() {
+    public int getBotNotePositionDistanceFromRoot() {
         return botNoteDistanceFromRoot;
     }
 

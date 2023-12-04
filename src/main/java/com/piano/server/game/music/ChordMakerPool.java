@@ -15,8 +15,9 @@ public class ChordMakerPool {
         this.chordMakerGroups = new ArrayList<>();
     }
 
-    public void addChordMakerGroup(ChordMakerGroup group) {
+    public ChordMakerPool addChordMakerGroup(ChordMakerGroup group) {
         this.chordMakerGroups.add(group);
+        return this;
     }
 
     public ChordMakerGroup getChordMakerGroup(int index) {

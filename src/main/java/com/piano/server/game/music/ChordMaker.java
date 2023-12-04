@@ -63,4 +63,8 @@ public class ChordMaker {
     public int getChordNoteCount() {
         return chordNoteCount;
     }
+
+    public ChromaticNotesList getNotePool() {
+        return notePool;
+    }
 }

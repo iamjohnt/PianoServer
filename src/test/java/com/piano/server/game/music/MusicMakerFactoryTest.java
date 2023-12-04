@@ -1,64 +1,95 @@
 package com.piano.server.game.music;
 
-import com.piano.server.game.music.Chord;
-import com.piano.server.game.music.MusicMakable;
-import com.piano.server.game.music.MusicMakerFactory;
-import com.piano.server.game.music.Config;
 import com.piano.server.game.util.ChordPool;
 import com.piano.server.game.util.KeySigMode;
 import com.piano.server.game.util.KeySigNote;
 import com.piano.server.game.util.WhichHands;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MusicMakerFactoryTest {
 
     @Test
-    void test_create_music_maker_within_bounds() {
+    public void test_build_and_run_random_note_maker() {
+        Config config = new Config()
+                .setChordPool(ChordPool.NOTE)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.BOTH)
+                .setLeftMin(48)
+                .setLeftMax(48)
+                .setRightMin(60)
+                .setRightMax(60)
+                .setLength(30);
 
-        Deque<Chord> musicSeq = null;
+        MusicMakerFactory factory = new MusicMakerFactory();
+        MusicMakable maker = factory.buildMusicMaker(config);
+        Deque<Chord> music = maker.makeMusic();
 
-        // create music maker config
-        Config config = new Config(
-                KeySigNote.C,
-                KeySigMode.MAJOR,
-                ChordPool.NOTE,
-                WhichHands.BOTH,
-                36,
-                38,
-                60,
-                64,
-                100
-        );
+        Chord expectedLeft = new Chord(48);
+        Chord expectedRight = new Chord(60);
 
-        // based on config, create appropriate music maker
-        MusicMakerFactory factory = new MusicMakerFactory(config);
-        MusicMakable maker = factory.getMusicMaker();
-
-        // make the music
-        musicSeq = maker.makeMusic();
-
-        //assert
-        Set<Integer> correctPoolOfNotes = new HashSet();
-        correctPoolOfNotes.add(36);
-        correctPoolOfNotes.add(38);
-        correctPoolOfNotes.add(60);
-        correctPoolOfNotes.add(62);
-        correctPoolOfNotes.add(64);
-
-        boolean isNotesWithinBounds = true;
-        for (Chord note : musicSeq) {
-            int cur = note.getChordList().stream().toList().get(0);
-            if (!correctPoolOfNotes.contains(cur)) {
-                isNotesWithinBounds = false;
-            }
+        for (Chord curChord : music) {
+            assertTrue(curChord.equals(expectedLeft) || curChord.equals(expectedRight));
         }
-        assert (isNotesWithinBounds);
+    }
+
+    @Test
+    public void test_build_and_run_random_interval_maker() {
+        Config config = new Config()
+                .setChordPool(ChordPool.INTERVAL)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.BOTH)
+                .setLeftMin(36)
+                .setLeftMax(48)
+                .setRightMin(60)
+                .setRightMax(72)
+                .setLength(1000);
+
+        MusicMakerFactory factory = new MusicMakerFactory();
+        MusicMakable maker = factory.buildMusicMaker(config);
+        Deque<Chord> music = maker.makeMusic();
+
+        System.out.println(music.toString());
+
+        Chord expectedLeft = new Chord(48, 50);
+        Chord expectedRight = new Chord(60, 62);
+
+        // TODO
+        for (Chord curChord : music) {
+            assertTrue(curChord.equals(expectedLeft) || curChord.equals(expectedRight));
+        }
     }
 
 
+    @Test
+    public void test_build_and_run_random_triad_maker() {
+        Config config = new Config()
+                .setChordPool(ChordPool.TRIAD)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.BOTH)
+                .setLeftMin(36)
+                .setLeftMax(48)
+                .setRightMin(60)
+                .setRightMax(72)
+                .setLength(1000);
 
+        MusicMakerFactory factory = new MusicMakerFactory();
+        MusicMakable maker = factory.buildMusicMaker(config);
+        Deque<Chord> music = maker.makeMusic();
+
+        System.out.println(music.toString());
+
+        Chord expectedLeft = new Chord(48, 50);
+        Chord expectedRight = new Chord(60, 62);
+
+        // TODO
+        for (Chord curChord : music) {
+            assertTrue(curChord.equals(expectedLeft) || curChord.equals(expectedRight));
+        }
+    }
 }

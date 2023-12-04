@@ -23,16 +23,16 @@ public class MusicMakerRandom implements MusicMakable {
     private int rmin;
     private int rmax;
     private int length;
-    private List<Integer> leftOrRightOrBothHands;
+    private List<Integer> handPool;
     private ChordMakerPool chordMakerPool;
 
     public MusicMakerRandom(Config config) {
-        this.leftOrRightOrBothHands = new ArrayList<>();
+        this.handPool = new ArrayList<>();
         extractConfigToVars(config);
     }
 
     public MusicMakerRandom() {
-        this.leftOrRightOrBothHands = new ArrayList<>();
+        this.handPool = new ArrayList<>();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MusicMakerRandom implements MusicMakable {
     private Deque<Chord> createRandomMusic() {
         Deque<Chord> music = new LinkedList<>();
         for (int i = 0; i < length; i++) {
-            int curHand = Rand.getRandomElement(leftOrRightOrBothHands);
+            int curHand = Rand.getRandomElement(handPool);
             if (curHand == LEFT) {
                 music.add(createRandomChord(lmin, lmax));
             } else {
@@ -55,21 +55,27 @@ public class MusicMakerRandom implements MusicMakable {
 
     private Chord createRandomChord(int min, int max) {
 
-        // TODO can generate music...but sometimes interval = 62, 65, when max bound is 64. Off by one.
-
+        // setup chord maker pool
         ChordMakerGroup randChordMakerGroup = Rand.getRandomElement(chordMakerPool.getChordMakerGroups());
         ChordMaker randChordMaker = Rand.getRandomElement(randChordMakerGroup.getChordMakers());
 
-        int adjustedMin = min + randChordMaker.getBotNoteDistanceFromRoot();
-        int adjustedMax = max - randChordMaker.getTopNoteDistanceFromRoot();
+        // adjust the min and max positions, so i can fit the chord properly
+        int minPosition = -12345;
+        int maxPosition = -12345;
+        try {
+            minPosition = notePool.getPositionByNote(min);
+            maxPosition = notePool.getPositionByNote(max);
+        } catch (NoteOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        int adjustedMinPosition = minPosition + randChordMaker.getBotNotePositionDistanceFromRoot();
+        int adjustedMaxPosition = maxPosition - randChordMaker.getTopNotePositionDistanceFromRoot();
 
-        int adjustedMinPosition = notePool.getPositionByNoteRoundedUp(adjustedMin);
-        int adjustedMaxPosition = notePool.getPositionByNoteRoundedDown(adjustedMax);
-
+        // get a random position between the adjusted min and max, and get the note from that position
         int randRootPosition = Rand.getRandInclusiveBetween(adjustedMinPosition, adjustedMaxPosition);
-
         int randRoot = notePool.getNoteByPosition(randRootPosition);
 
+        // create a chord by passing that random note as the root
         Chord chord = randChordMaker.createChord(randRoot);
         return chord;
 
@@ -85,11 +91,11 @@ public class MusicMakerRandom implements MusicMakable {
                 config.getKeySigMode()
         );
         if (config.getHands() == WhichHands.LEFT) {
-            leftOrRightOrBothHands.add(LEFT);
+            handPool.add(LEFT);
         } else if (config.getHands() == WhichHands.RIGHT) {
-            leftOrRightOrBothHands.add(RIGHT);
+            handPool.add(RIGHT);
         } else {
-            leftOrRightOrBothHands.add(LEFT, RIGHT);
+            handPool.add(LEFT, RIGHT);
         }
 
         this.whichHands = config.getHands();

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Deque;
 
 public class MusicMakerRandomTest {
@@ -74,8 +76,43 @@ public class MusicMakerRandomTest {
 
         // make music
         Deque<Chord> music = random.makeMusic();
-        System.out.println(music);
 
+        //assert
+        for (Chord curChord : music) {
+            int len = curChord.getLength();
+            assertTrue(len == 1 || len == 2);
+        }
+    }
+
+
+    @Test
+    void test_music_makers_interval_third_down() {
+
+        // setup config
+        Config config = new Config()
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.RIGHT)
+                .setRightMin(60)
+                .setRightMax(64)
+                .setLength(20);
+
+        // setup chord maker pool
+        ChromaticNotesList c_major = new ChromaticNotesList(KeySigNote.C, KeySigMode.MAJOR);
+        ChordMaker intervalThirdMaker = new ChordMaker(c_major, ChordPattern.INTERVAL_THIRD);
+        ChordMakerGroup intervalMakerGroup = new ChordMakerGroup().addChordMaker(intervalThirdMaker);
+        ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(intervalMakerGroup);
+
+        // setup music maker
+        MusicMakerRandom random = new MusicMakerRandom(config);
+        random.setChordMakerPool(pool);
+        Deque<Chord> music = random.makeMusic();
+
+        //assert
+        Chord expected = new Chord(60, 64);
+        for (Chord curChord : music) {
+            assertTrue(curChord.equals(expected));
+        }
     }
 
 

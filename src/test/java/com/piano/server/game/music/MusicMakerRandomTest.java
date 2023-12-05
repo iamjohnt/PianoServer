@@ -526,5 +526,103 @@ public class MusicMakerRandomTest {
         }
     }
 
+    @Nested
+    @DisplayName("test tetrads")
+    class Tetrads {
+
+        @Test
+        void test_tetrad_normal() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.TETRAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(72)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TETRAD);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 64, 67, 72);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_tetrad_inverted() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.TETRAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(72)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TETRAD_INVERTED);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 65, 69, 72);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_tetrad_seventh() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.TETRAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(71)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TETRAD_SEVENTH);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 64, 67, 71);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+    }
 
 }

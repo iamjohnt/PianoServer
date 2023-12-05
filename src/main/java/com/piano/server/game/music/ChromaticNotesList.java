@@ -132,4 +132,8 @@ public class ChromaticNotesList {
         return base;
     }
 
+    @Override
+    public String toString() {
+        return keySigNote + "_" + keySigMode;
+    }
 }

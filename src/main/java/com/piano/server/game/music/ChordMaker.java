@@ -1,5 +1,7 @@
 package com.piano.server.game.music;
 
+import java.util.Arrays;
+
 public class ChordMaker {
 
     private ChromaticNotesList notePool;
@@ -66,5 +68,10 @@ public class ChordMaker {
 
     public ChromaticNotesList getNotePool() {
         return notePool;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(chordPattern);
     }
 }

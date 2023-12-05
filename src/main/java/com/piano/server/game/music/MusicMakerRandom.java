@@ -62,7 +62,7 @@ public class MusicMakerRandom implements MusicMakable {
         int minPosition = chromaticNotePool.getPositionByNoteRoundedUp(min);
         int maxPosition = chromaticNotePool.getPositionByNoteRoundedDown(max);
 
-        int adjustedMinPosition = minPosition + randChordMaker.getBotNotePositionDistanceFromRoot();
+        int adjustedMinPosition = minPosition - randChordMaker.getBotNotePositionDistanceFromRoot();
         int adjustedMaxPosition = maxPosition - randChordMaker.getTopNotePositionDistanceFromRoot();
 
         // get a random position between the adjusted min and max, and get the note from that position

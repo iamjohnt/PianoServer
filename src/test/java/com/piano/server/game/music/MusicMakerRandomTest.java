@@ -1,9 +1,7 @@
 package com.piano.server.game.music;
 
 import com.piano.server.game.util.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,22 +9,28 @@ import java.util.Deque;
 
 public class MusicMakerRandomTest {
 
+    private Config baseConfig;
+
     @BeforeEach
     void setup() {
-
+        baseConfig = new Config()
+            .setKeySigNote(KeySigNote.C)
+            .setKeySigMode(KeySigMode.MAJOR)
+            .setHands(WhichHands.RIGHT)
+            .setLength(20);
     }
 
     @AfterEach
     void teardown() {
-
+        baseConfig = null;
     }
 
     /*
     what correctness do i need to test?
-    if left hand, then left hand only
-    if right hand, then right hand only
-    if both hands, then has both hands
-    if notes, then notes only
+    if left hand, then left hand only -- done
+    if right hand, then right hand only -- done
+    if both hands, then has both hands -- done
+    if notes, then notes only -- done
     if intervals, then intervals only
     if triads, then triads only
     if tetrads, then tetrads only
@@ -40,78 +44,485 @@ public class MusicMakerRandomTest {
     */
 
     @Test
-    void test_music_makers_with_notes_and_intervals() {
+    void test_note() {
 
-        ChromaticNotesList c_major = new ChromaticNotesList(KeySigNote.C, KeySigMode.MAJOR);
         Config config = new Config()
+                .setChordPool(ChordPool.NOTE)
                 .setKeySigNote(KeySigNote.C)
                 .setKeySigMode(KeySigMode.MAJOR)
                 .setHands(WhichHands.RIGHT)
                 .setRightMin(60)
-                .setRightMax(64)
-                .setLength(20);
+                .setRightMax(60)
+                .setLength(1);
 
-        MusicMakerRandom random = new MusicMakerRandom(config);
+        ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+        ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.NOTE);
+        ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+        ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
 
-        // make individual chord makers
-        ChordMaker noteMaker = new ChordMaker(c_major, ChordPattern.NOTE);
-        ChordMaker intervalSecondMaker = new ChordMaker(c_major, ChordPattern.INTERVAL_SECOND);
-        ChordMaker intervalThirdMaker = new ChordMaker(c_major, ChordPattern.INTERVAL_THIRD);
+        MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                .setWhichHands(config.getHands())
+                .setLmin(config.getLeftMin())
+                .setLmax(config.getLeftMax())
+                .setRmin(config.getRightMin())
+                .setRmax(config.getRightMax())
+                .setLength(config.getLength())
+                .setChordMakerPool(pool);
 
-        // add them to their respective groups
-        ChordMakerGroup noteMakerGroup = new ChordMakerGroup();
-        noteMakerGroup.addChordMaker(noteMaker);
+        Deque<Chord> music = randomNoteMaker.makeMusic();
 
-        ChordMakerGroup intervalMakerGroup = new ChordMakerGroup();
-        intervalMakerGroup.addChordMaker(intervalSecondMaker);
-        intervalMakerGroup.addChordMaker(intervalThirdMaker);
+        System.out.println(music);
+    }
 
-        // add the groups to the pool
-        ChordMakerPool pool = new ChordMakerPool();
-        pool.addChordMakerGroup(intervalMakerGroup);
-        pool.addChordMakerGroup(noteMakerGroup);
+    @Nested
+    @DisplayName("test intervals")
+    class Intervals {
+        @Test
+        void test_interval_second() {
 
-        // add pool to the music maker
-        random.setChordMakerPool(pool);
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(62)
+                    .setLength(1);
 
-        // make music
-        Deque<Chord> music = random.makeMusic();
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_SECOND);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
 
-        //assert
-        for (Chord curChord : music) {
-            int len = curChord.getLength();
-            assertTrue(len == 1 || len == 2);
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 62);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_third() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(64)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_THIRD);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 64);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_fourth() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(65)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_FOURTH);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 65);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_fifth() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(67)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_FIFTH);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 67);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_sixth() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(69)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_SIXTH);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 69);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_seventh() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(71)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_SEVENTH);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 71);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_interval_octave() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.INTERVAL)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(72)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.INTERVAL_OCTAVE);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 72);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
         }
     }
 
+    @Nested
+    @DisplayName("test triads")
+    class Triads {
 
-    @Test
-    void test_music_makers_interval_third_down() {
+        @Test
+        void test_triad_normal() {
 
-        // setup config
-        Config config = new Config()
-                .setKeySigNote(KeySigNote.C)
-                .setKeySigMode(KeySigMode.MAJOR)
-                .setHands(WhichHands.RIGHT)
-                .setRightMin(60)
-                .setRightMax(64)
-                .setLength(20);
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(67)
+                    .setLength(1);
 
-        // setup chord maker pool
-        ChromaticNotesList c_major = new ChromaticNotesList(KeySigNote.C, KeySigMode.MAJOR);
-        ChordMaker intervalThirdMaker = new ChordMaker(c_major, ChordPattern.INTERVAL_THIRD);
-        ChordMakerGroup intervalMakerGroup = new ChordMakerGroup().addChordMaker(intervalThirdMaker);
-        ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(intervalMakerGroup);
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TRIAD);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
 
-        // setup music maker
-        MusicMakerRandom random = new MusicMakerRandom(config);
-        random.setChordMakerPool(pool);
-        Deque<Chord> music = random.makeMusic();
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
 
-        //assert
-        Chord expected = new Chord(60, 64);
-        for (Chord curChord : music) {
-            assertTrue(curChord.equals(expected));
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 64, 67);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_sus_2() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(67)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TRIAD_SUS_2);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 62, 67);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_sus_4() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(67)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker chordMaker = new ChordMaker(notePool, ChordPattern.TRIAD_SUS_4);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(chordMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 65, 67);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_inversion_2_down() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(64)
+                    .setRightMax(72)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.TRIAD_INVERSION_2_DOWN);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(64, 67, 72);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_inversion_2_up() {
+
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(64)
+                    .setRightMax(72)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.TRIAD_INVERSION_2_UP);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(64, 67, 72);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_inversion_3_down() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(69)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.TRIAD_INVERSION_3_DOWN);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 65, 69);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_triad_inversion_3_up() {
+            Config config = new Config()
+                    .setChordPool(ChordPool.TRIAD)
+                    .setKeySigNote(KeySigNote.C)
+                    .setKeySigMode(KeySigMode.MAJOR)
+                    .setHands(WhichHands.RIGHT)
+                    .setRightMin(60)
+                    .setRightMax(69)
+                    .setLength(1);
+
+            ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+            ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.TRIAD_INVERSION_3_UP);
+            ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+            ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+            MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                    .setWhichHands(config.getHands())
+                    .setLmin(config.getLeftMin())
+                    .setLmax(config.getLeftMax())
+                    .setRmin(config.getRightMin())
+                    .setRmax(config.getRightMax())
+                    .setLength(config.getLength())
+                    .setChordMakerPool(pool);
+
+            Deque<Chord> music = randomNoteMaker.makeMusic();
+            Chord expected = new Chord(60, 65, 69);
+            Chord actual = music.pop();
+            assertEquals(expected, actual);
         }
     }
 

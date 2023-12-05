@@ -51,7 +51,7 @@ public class MusicMakerRandom implements MusicMakable {
         return music;
     }
 
-    private Chord createRandomChord(int min, int max) {
+    private Chord createRandomChord(int min, int max) throws IllegalArgumentException{
 
         ChordMakerGroup randChordMakerGroup = Rand.getRandomElement(chordMakerPool.getChordMakerGroups());
         ChordMaker randChordMaker = Rand.getRandomElement(randChordMakerGroup.getChordMakers());
@@ -66,7 +66,15 @@ public class MusicMakerRandom implements MusicMakable {
         int adjustedMaxPosition = maxPosition - randChordMaker.getTopNotePositionDistanceFromRoot();
 
         // get a random position between the adjusted min and max, and get the note from that position
-        int randRootPosition = Rand.getRandInclusiveBetween(adjustedMinPosition, adjustedMaxPosition);
+        int randRootPosition = -1;
+        try {
+            randRootPosition = Rand.getRandInclusiveBetween(adjustedMinPosition, adjustedMaxPosition);
+        } catch (IllegalArgumentException e) {
+            String msg = "Min / Max range of " + Integer.toString(min) + " - " + Integer.toString(max) +
+                        " is not large enough to hold chords made by ChordMaker with pattern " + randChordMaker.toString() +
+                        " within " + chromaticNotePool.toString();
+            throw new IllegalArgumentException(msg);
+        }
         int randRoot = chromaticNotePool.getNoteByPosition(randRootPosition);
 
         // create a chord by passing that random note as the root

@@ -625,4 +625,37 @@ public class MusicMakerRandomTest {
         }
     }
 
+    @Test
+    void test_handle_min_max_not_big_enough_for_chord() {
+        Config config = new Config()
+                .setChordPool(ChordPool.NOTE)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.RIGHT)
+                .setRightMin(60)
+                .setRightMax(66)
+                .setLength(1);
+
+        ChromaticNotesList notePool = new ChromaticNotesList(config.getKeySigNote(), config.getKeySigMode());
+        ChordMaker noteMaker = new ChordMaker(notePool, ChordPattern.TRIAD);
+        ChordMakerGroup noteMakerGroup = new ChordMakerGroup().addChordMaker(noteMaker);
+        ChordMakerPool pool = new ChordMakerPool().addChordMakerGroup(noteMakerGroup);
+
+        MusicMakerRandom randomNoteMaker = new MusicMakerRandom()
+                .setWhichHands(config.getHands())
+                .setLmin(config.getLeftMin())
+                .setLmax(config.getLeftMax())
+                .setRmin(config.getRightMin())
+                .setRmax(config.getRightMax())
+                .setLength(config.getLength())
+                .setChordMakerPool(pool);
+
+        Deque<Chord> music;
+
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                () -> randomNoteMaker.makeMusic()
+        );
+        assertTrue(exception instanceof IllegalArgumentException);
+    }
+
 }

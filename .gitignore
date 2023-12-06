@@ -1,3 +1,5 @@
 .idea/
 target/
 **/TestSnippets.java
+**/.DS_Store
+notes.txt

@@ -1,6 +1,7 @@
 package com.piano.server.game.music;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Chord {
@@ -18,17 +19,32 @@ public class Chord {
         }
     }
 
-    public Set<Integer> getChord() {
-        return chord;
+    public List<Integer> getChordList() {
+        return this.chord.stream().sorted().toList();
+    }
+
+    public Set<Integer> getChordSet() {
+        return this.chord;
+    }
+
+    public boolean isInBounds(int min, int max) {
+        List<Integer> notes = getChordList();
+        int bot = notes.get(0);
+        int top = notes.get(notes.size() - 1);
+        return
+            bot >= min &&
+            bot <= max &&
+            top >= min &&
+            top <= max;
+    }
+
+    public int getLength() {
+        return chord.size();
     }
 
     @Override
     public String toString() {
-        String rtn = "";
-        for (Integer note : chord) {
-            rtn += note.toString() + " ";
-        }
-        return rtn;
+        return getChordList().toString();
     }
 
     @Override
@@ -40,7 +56,7 @@ public class Chord {
             return false;
         }
         Chord casted = (Chord) o;
-        return this.chord.equals(casted.getChord());
+        return this.chord.equals(casted.getChordSet());
     }
 
 

@@ -7,7 +7,8 @@ import com.piano.server.game.util.WhichHands;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Deque;
+import java.util.List;
+import java.util.List;
 
 public class MusicMakerFactoryTest {
 
@@ -26,7 +27,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         Chord expectedLeft = new Chord(48);
         Chord expectedRight = new Chord(60);
@@ -51,7 +52,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
             assertTrue(curChord.getLength() == 2);
@@ -74,7 +75,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
             assertTrue(curChord.getLength() == 3);
@@ -96,7 +97,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
             assertTrue(curChord.getLength() == 4);
@@ -118,7 +119,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;
@@ -149,7 +150,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;
@@ -185,7 +186,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;

@@ -5,14 +5,14 @@ import com.piano.server.game.music.Config;
 import com.piano.server.game.music.MusicMakable;
 import com.piano.server.game.music.MusicMakerFactory;
 
-import java.util.Deque;
+import java.util.List;
 
 public class GameSession {
 
     private MusicMakable musicMaker;
     private String session_id;
     private int session_user_id;
-    private Deque<Chord> music;
+    private List<Chord> music;
     private int curChordPointer;
 
     public GameSession() {

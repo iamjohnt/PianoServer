@@ -34,12 +34,12 @@ public class MusicMakerRandom implements MusicMakable {
     }
 
     @Override
-    public Deque<Chord> makeMusic() {
+    public List<Chord> makeMusic() {
         return createRandomMusic();
     }
 
-    private Deque<Chord> createRandomMusic() {
-        Deque<Chord> music = new LinkedList<>();
+    private List<Chord> createRandomMusic() {
+        List<Chord> music = new LinkedList<>();
         for (int i = 0; i < length; i++) {
             int curHand = Rand.getRandomElement(handPool);
             if (curHand == LEFT) {

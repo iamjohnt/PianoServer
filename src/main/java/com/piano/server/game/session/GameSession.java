@@ -31,6 +31,17 @@ public class GameSession {
 
     public void startGame() {
         music = musicMaker.makeMusic();
+        curChordPointer = 0;
+    }
+
+    public boolean validateChord(Chord chordSubmission) {
+        Chord curChord = music.get(curChordPointer);
+        if (chordSubmission.equals(curChord)) {
+            curChordPointer++;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String toString() {

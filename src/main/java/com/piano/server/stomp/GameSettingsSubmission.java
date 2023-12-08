@@ -116,12 +116,16 @@ public class GameSettingsSubmission {
 
     @Override
     public String toString() {
-        return "GameSettingsSubmission {" +
+        return "GameSettingsSubmission{" +
                 "keySigNote=" + keySigNote +
                 ", keySigMode=" + keySigMode +
                 ", chordPool=" + chordPool +
                 ", whichHands=" + whichHands +
+                ", leftMin=" + leftMin +
+                ", leftMax=" + leftMax +
+                ", rightMin=" + rightMin +
+                ", rightMax=" + rightMax +
                 ", length=" + length +
-                " }";
+                '}';
     }
 }

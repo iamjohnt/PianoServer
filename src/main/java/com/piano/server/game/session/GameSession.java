@@ -27,6 +27,7 @@ public class GameSession {
         this.musicMaker = factory.buildMusicMaker(config);
         this.session_id = session_id;
         log = LoggerFactory.getLogger(GameSession.class);
+        log.info("GameSession config: " + config.toString());
     }
 
     public String getSession_id() {

@@ -1,5 +1,8 @@
 package com.piano.server.stomp;
 
+import com.piano.server.game.music.Chord;
+import com.piano.server.game.music.Config;
+import com.piano.server.game.session.GameSession;
 import com.piano.server.game.session.GameSessionContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
@@ -28,20 +31,34 @@ public class Controller {
 
     @MessageMapping("/chord")
     @SendTo("/topic/chord")
-    public ChordResponse chordResponse(ChordSubmission message) throws Exception {
+    public ChordResponse chordResponse(@Header("simpSessionId") String sessionId, ChordSubmission message) throws Exception {
         Timestamp ts = Timestamp.from(Instant.now());
-        System.out.println(ts.toString() + " LOG: received chord --- " + message.getChord().toString());
+        GameSession session = this.gameSessions.getSession(sessionId);
+        Chord chord = new Chord(message.getChord());
+        session.validateChord(chord);
         return new ChordResponse("dummy response");
     }
 
     @MessageMapping("/settings")
     @SendTo("/topic/chord")
-    public GameSettingsResponse chordResponse(@Header("simpSessionId") String sessionId, GameSettingsSubmission message) throws Exception {
-//        Config config = new Config();
-//        GameSession gameSession = new GameSession(config);
-//        this.gameSessions.addSession(sessionId, gameSession);
+    public GameSettingsResponse chordResponse(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) throws Exception {
+
         Timestamp ts = Timestamp.from(Instant.now());
-        System.out.println("\n" + ts.toString() + " LOG: received settings --- \n" + message.toString() + "\n");
+
+        Config config = new Config()
+                .setChordPool(settings.getChordPool())
+                .setKeySigNote(settings.getKeySigNote())
+                .setKeySigMode(settings.getKeySigMode())
+                .setHands(settings.getWhichHands())
+                .setLength(settings.getLength())
+                .setLeftMin(settings.getLeftMin())
+                .setLeftMax(settings.getLeftMax())
+                .setRightMin(settings.getRightMin())
+                .setRightMax(settings.getRightMax());
+
+        GameSession session = new GameSession(sessionId, config);
+        session.startGame();
+        gameSessions.addSession(sessionId, session);
         return new GameSettingsResponse(true);
     }
 }

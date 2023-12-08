@@ -5,14 +5,18 @@ import java.util.Map;
 
 public class GameSessionContainer {
 
-    private Map<String, GameSession> gameSessionList = new HashMap();
+    private Map<String, GameSession> gameSessions = new HashMap();
 
     public void addSession(String session_id, GameSession gameSession) {
-        this.gameSessionList.put(session_id, gameSession);
+        this.gameSessions.put(session_id, gameSession);
     }
 
     public void removeSession(String session_id) {
-        gameSessionList.remove(session_id);
+        gameSessions.remove(session_id);
+    }
+
+    public GameSession getSession(String session_id) {
+        return this.gameSessions.getOrDefault(session_id, null);
     }
 
 }

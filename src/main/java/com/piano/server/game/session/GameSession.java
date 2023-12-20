@@ -4,6 +4,7 @@ import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.Config;
 import com.piano.server.game.music.MusicMakable;
 import com.piano.server.game.music.MusicMakerFactory;
+import com.piano.server.stomp.ChordResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,20 +42,20 @@ public class GameSession {
         log.info("current chord: " + music.get(0).toString() + " current chord index: " + Integer.toString(curChordPointer) + "\n");
     }
 
-    public String checkChordAdvanceIfCorrect(Chord chordSubmission) {
+    public ChordResponse checkChordAdvanceIfCorrect(Chord chordSubmission) {
         if (curChordPointer > music.size()) {
             log.debug("reached end of music");
-            return "false";
+            return new ChordResponse(chordSubmission, null, false);
         }
 
         if (chordSubmission.equals(music.get(curChordPointer))) {
             curChordPointer++;
-            return "submission: " + chordSubmission.toString() + " | actual: " + music.get(curChordPointer).toString() + " | CORRECT";
+            return new ChordResponse(chordSubmission, music.get(curChordPointer), true);
 //            log.info("correct :^) " + chordSubmission.toString());
 //            log.info("curr music: " + music.toString());
 //            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
         } else {
-            return "submission: " + chordSubmission.toString() + " | actual: " + music.get(curChordPointer).toString() + " | IN-CORRECT";
+            return new ChordResponse(chordSubmission, music.get(curChordPointer), false);
 //            log.info("IN-CORRECT! " + chordSubmission.toString());
 //            log.info("curr music: " + music.toString());
 //            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");

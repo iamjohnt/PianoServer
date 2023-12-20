@@ -31,17 +31,17 @@ public class Controller {
 
     @MessageMapping("/chord")
     @SendTo("/topic/chord")
-    public ChordResponse chordResponse(@Header("simpSessionId") String sessionId, ChordSubmission message) throws Exception {
+    public ChordResponse handleChord(@Header("simpSessionId") String sessionId, ChordSubmission message) throws Exception {
         Timestamp ts = Timestamp.from(Instant.now());
         GameSession session = this.gameSessions.getSession(sessionId);
         Chord chord = new Chord(message.getChord());
-        session.validateChord(chord);
-        return new ChordResponse("dummy response");
+        ChordResponse response = session.checkChordAdvanceIfCorrect(chord);
+        return response;
     }
 
     @MessageMapping("/settings")
     @SendTo("/topic/chord")
-    public GameSettingsResponse chordResponse(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) throws Exception {
+    public GameSettingsResponse handleGameSettings(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) throws Exception {
 
         Timestamp ts = Timestamp.from(Instant.now());
 
@@ -61,4 +61,6 @@ public class Controller {
         gameSessions.addSession(sessionId, session);
         return new GameSettingsResponse(true);
     }
+
+
 }

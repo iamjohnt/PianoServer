@@ -41,23 +41,23 @@ public class GameSession {
         log.info("current chord: " + music.get(0).toString() + " current chord index: " + Integer.toString(curChordPointer) + "\n");
     }
 
-    public boolean validateChord(Chord chordSubmission) {
+    public String checkChordAdvanceIfCorrect(Chord chordSubmission) {
         if (curChordPointer > music.size()) {
             log.debug("reached end of music");
-            return false;
+            return "false";
         }
 
         if (chordSubmission.equals(music.get(curChordPointer))) {
             curChordPointer++;
-            log.info("correct :^) " + chordSubmission.toString());
-            log.info("curr music: " + music.toString());
-            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
-            return true;
+            return "submission: " + chordSubmission.toString() + " | actual: " + music.get(curChordPointer).toString() + " | CORRECT";
+//            log.info("correct :^) " + chordSubmission.toString());
+//            log.info("curr music: " + music.toString());
+//            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
         } else {
-            log.info("IN-CORRECT! " + chordSubmission.toString());
-            log.info("curr music: " + music.toString());
-            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
-            return false;
+            return "submission: " + chordSubmission.toString() + " | actual: " + music.get(curChordPointer).toString() + " | IN-CORRECT";
+//            log.info("IN-CORRECT! " + chordSubmission.toString());
+//            log.info("curr music: " + music.toString());
+//            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
         }
     }
 

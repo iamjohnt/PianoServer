@@ -17,12 +17,22 @@ public class ChordResponse {
     private Chord submittedChord;
     private Chord correctChord;
     private Boolean isCorrect;
+    private Boolean musicSequenceString;
+
+
+    public Boolean getMusicSequenceString() {
+        return musicSequenceString;
+    }
+
+    public void setMusicSequenceString(Boolean musicSequenceString) {
+        this.musicSequenceString = musicSequenceString;
+    }
 
     public boolean isCorrect() {
         return isCorrect;
     }
 
-    public void setCorrect(boolean correct) {
+    public void setIsCorrect(boolean correct) {
         isCorrect = correct;
     }
 
@@ -40,6 +50,10 @@ public class ChordResponse {
 
     public void setCorrectChord(Chord correctChord) {
         this.correctChord = correctChord;
+    }
+
+    public Boolean getIsCorrect() {
+        return isCorrect;
     }
 
     @Override

@@ -43,14 +43,21 @@ public class GameSession {
     }
 
     public ChordResponse checkChordAdvanceIfCorrect(Chord chordSubmission) {
-        if (curChordPointer > music.size()) {
-            log.debug("reached end of music");
+
+        if (music == null) {
+            log.info("game has not started yet");
+            return new ChordResponse(chordSubmission, null, false);
+        }
+
+        if (curChordPointer >= music.size()) {
+            log.info("reached end of music");
             return new ChordResponse(chordSubmission, null, false);
         }
 
         if (chordSubmission.equals(music.get(curChordPointer))) {
+            ChordResponse rtn = new ChordResponse(chordSubmission, music.get(curChordPointer), true);
             curChordPointer++;
-            return new ChordResponse(chordSubmission, music.get(curChordPointer), true);
+            return rtn;
 //            log.info("correct :^) " + chordSubmission.toString());
 //            log.info("curr music: " + music.toString());
 //            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
@@ -63,6 +70,6 @@ public class GameSession {
     }
 
     public String toString() {
-        return "Session ID: " + session_id + " : Music: " + music.toString();
+        return "Session ID: " + session_id + ", Music: " + music.toString() + ", curChordPointer : " + curChordPointer;
     }
 }

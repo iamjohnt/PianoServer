@@ -64,7 +64,7 @@ public class Controller {
 
         GameSession session = new GameSession(sessionId, config);
         gameSessions.addSession(sessionId, session);
-        return new GameSettingsResponse(true);
+        return new GameSettingsResponse(true, "game settings applied");
     }
 
     @MessageMapping("/startgame")

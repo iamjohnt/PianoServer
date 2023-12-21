@@ -63,7 +63,6 @@ public class Controller {
                 .setRightMax(settings.getRightMax());
 
         GameSession session = new GameSession(sessionId, config);
-        session.startGame();
         gameSessions.addSession(sessionId, session);
         return new GameSettingsResponse(true);
     }

@@ -66,5 +66,17 @@ public class Controller {
         return new GameSettingsResponse(true);
     }
 
+    @MessageMapping("/startgame")
+    @SendTo("/topic/chord")
+    public StartGameResponse handleStartGame() {
+
+    }
+
+    @MessageMapping("/endgame")
+    @SendTo("/topic/chord")
+    public EndGameResponse handleEndGame() {
+
+    }
+
 
 }

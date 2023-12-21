@@ -68,13 +68,14 @@ public class Controller {
 
     @MessageMapping("/startgame")
     @SendTo("/topic/chord")
-    public StartGameResponse handleStartGame() {
+    public StartGameResponse handleStartGame(@Header("simpSessionId") String sessionId, StartGameSubmission start) {
 
     }
 
+
     @MessageMapping("/endgame")
     @SendTo("/topic/chord")
-    public EndGameResponse handleEndGame() {
+    public EndGameResponse handleEndGame(@Header("simpSessionId") String sessionId, EndGameSubmission end) {
 
     }
 

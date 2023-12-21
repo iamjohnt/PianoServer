@@ -104,10 +104,8 @@ public class Controller {
         if (session == null) {
             response = new EndGameResponse(false, "game session does not exist");
         } else if (state == GameState.State.UNSTARTED) {
-            response = new EndGameResponse(false, "game is not started yet, cannot end");
-        } else if (state == GameState.State.FINISHED) {
-            response = new EndGameResponse(false, "game is already finished, cannot end");
-        } else if (state == GameState.State.STARTED) {
+            response = new EndGameResponse(false, "game is already unstarted, cannot end game");
+        } else {
             session.endGame();
             response = new EndGameResponse(true, "game has ended");
         }

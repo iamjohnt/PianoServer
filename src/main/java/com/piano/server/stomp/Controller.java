@@ -22,10 +22,8 @@ import java.time.Instant;
 @Component
 public class Controller {
 
-    @Autowired
     private GameSessionContainer gameSessions;
 
-    @Autowired
     private GameState gameState;
 
     @MessageMapping("/hello")
@@ -113,7 +111,7 @@ public class Controller {
 
     @MessageMapping("/startsession")
     @SendTo("/topic/chord")
-    public CreateSessionResponse handleStartSession(@Header("simpSessionId") String sessionId, CreateSessionSubmission startSessionSubmission) {
+    public CreateSessionResponse handleCreateSession(@Header("simpSessionId") String sessionId, CreateSessionSubmission startSessionSubmission) {
         if (gameSessions.constainsSession(sessionId)) {
             return new CreateSessionResponse(false, "session is already created");
         } else {
@@ -126,5 +124,15 @@ public class Controller {
     public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {
         gameSessions.removeSession(sessionId);
         return new EndSessionResponse();
+    }
+
+    @Autowired
+    public void setGameSessions(GameSessionContainer gameSessions) {
+        this.gameSessions = gameSessions;
+    }
+
+    @Autowired
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

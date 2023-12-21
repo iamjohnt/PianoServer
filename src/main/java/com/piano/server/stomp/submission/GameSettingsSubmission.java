@@ -1,4 +1,4 @@
-package com.piano.server.stomp;
+package com.piano.server.stomp.submission;
 
 import com.piano.server.game.util.ChordPool;
 import com.piano.server.game.util.KeySigMode;

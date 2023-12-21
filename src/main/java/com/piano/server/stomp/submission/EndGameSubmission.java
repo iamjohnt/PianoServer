@@ -1,4 +1,4 @@
-package com.piano.server.stomp;
+package com.piano.server.stomp.submission;
 
 public class EndGameSubmission {
 

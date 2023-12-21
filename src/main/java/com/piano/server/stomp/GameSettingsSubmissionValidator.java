@@ -1,9 +1,8 @@
 package com.piano.server.stomp;
 
 import com.piano.server.game.util.ChordPool;
-import com.piano.server.game.util.KeySigMode;
-import com.piano.server.game.util.KeySigNote;
 import com.piano.server.game.util.WhichHands;
+import com.piano.server.stomp.submission.GameSettingsSubmission;
 
 public class GameSettingsSubmissionValidator {
 

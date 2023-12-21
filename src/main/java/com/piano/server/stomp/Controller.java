@@ -5,6 +5,8 @@ import com.piano.server.game.music.Config;
 import com.piano.server.game.session.GameSession;
 import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.GameState;
+import com.piano.server.stomp.response.*;
+import com.piano.server.stomp.submission.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -69,14 +71,14 @@ public class Controller {
     @MessageMapping("/startgame")
     @SendTo("/topic/chord")
     public StartGameResponse handleStartGame(@Header("simpSessionId") String sessionId, StartGameSubmission start) {
-
+        return null; // TODO
     }
 
 
     @MessageMapping("/endgame")
     @SendTo("/topic/chord")
     public EndGameResponse handleEndGame(@Header("simpSessionId") String sessionId, EndGameSubmission end) {
-
+        return null; // TODO
     }
 
 

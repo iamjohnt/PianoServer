@@ -4,7 +4,7 @@ import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.Config;
 import com.piano.server.game.music.MusicMakable;
 import com.piano.server.game.music.MusicMakerFactory;
-import com.piano.server.stomp.ChordResponse;
+import com.piano.server.stomp.response.ChordResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

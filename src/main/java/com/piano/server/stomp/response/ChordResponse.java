@@ -1,4 +1,4 @@
-package com.piano.server.stomp;
+package com.piano.server.stomp.response;
 
 import com.piano.server.game.music.Chord;
 

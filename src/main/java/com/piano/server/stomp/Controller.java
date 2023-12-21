@@ -71,7 +71,22 @@ public class Controller {
     @MessageMapping("/startgame")
     @SendTo("/topic/chord")
     public StartGameResponse handleStartGame(@Header("simpSessionId") String sessionId, StartGameSubmission start) {
-        return null; // TODO
+
+        StartGameResponse response = null;
+        GameState.State state = gameState.getCurrentState();
+        GameSession session = gameSessions.getSession(sessionId);
+
+        if (session == null) {
+            response = new StartGameResponse(false, "game session does not exist");
+        } else if (state == GameState.State.STARTED) {
+            response = new StartGameResponse(false, "game is already started");
+        } else if (state == GameState.State.FINISHED) {
+            response = new StartGameResponse(false, "game is already finished");
+        } else if (state == GameState.State.UNSTARTED) {
+            session.startGame();
+            response = new StartGameResponse(true, "game has started");
+        }
+        return response;
     }
 
 

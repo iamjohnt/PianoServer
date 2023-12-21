@@ -111,5 +111,10 @@ public class Controller {
         return response;
     }
 
-
+    @MessageMapping("/endsession")
+    @SendTo("/topic/chord")
+    public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {
+        gameSessions.removeSession(sessionId);
+        return new EndSessionResponse();
+    }
 }

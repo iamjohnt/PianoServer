@@ -82,6 +82,10 @@ public class GameSession {
         }
     }
 
+    public List<Chord> getMusic() {
+        return music;
+    }
+
     public String toString() {
         return "Session ID: " + session_id + ", Music: " + music.toString() + ", curChordPointer : " + curChordPointer;
     }

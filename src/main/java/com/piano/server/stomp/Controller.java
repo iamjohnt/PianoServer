@@ -76,17 +76,17 @@ public class Controller {
         GameSession session = gameSessions.getSession(sessionId);
 
         if (session == null) {
-            return new StartGameResponse(false, "game session does not exist");
+            return new StartGameResponse(false, "game session does not exist", null);
         }
 
         switch (state) {
-            case STARTING -> response = new StartGameResponse(false, "game is starting");
-            case STARTED -> response = new StartGameResponse(false, "game is already started");
-            case FINISHING -> response = new StartGameResponse(false, "game is finishing");
-            case FINISHED -> response = new StartGameResponse(false, "game is already finished");
+            case STARTING -> response = new StartGameResponse(false, "game is starting", null);
+            case STARTED -> response = new StartGameResponse(false, "game is already started", null);
+            case FINISHING -> response = new StartGameResponse(false, "game is finishing", null);
+            case FINISHED -> response = new StartGameResponse(false, "game is already finished", null);
             case UNSTARTED -> {
                 session.startGame();
-                response = new StartGameResponse(true, "game has started");
+                response = new StartGameResponse(true, "game has started", session.getMusic());
             }
         }
         return response;

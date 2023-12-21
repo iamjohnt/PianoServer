@@ -4,6 +4,7 @@ import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.Config;
 import com.piano.server.game.session.GameSession;
 import com.piano.server.game.session.GameSessionContainer;
+import com.piano.server.game.util.GameState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,6 +22,9 @@ public class Controller {
 
     @Autowired
     private GameSessionContainer gameSessions;
+
+    @Autowired
+    private GameState gameState;
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")

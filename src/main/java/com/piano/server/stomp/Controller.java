@@ -93,7 +93,21 @@ public class Controller {
     @MessageMapping("/endgame")
     @SendTo("/topic/chord")
     public EndGameResponse handleEndGame(@Header("simpSessionId") String sessionId, EndGameSubmission end) {
-        return null; // TODO
+        EndGameResponse response = null;
+        GameState.State state = gameState.getCurrentState();
+        GameSession session = gameSessions.getSession(sessionId);
+
+        if (session == null) {
+            response = new EndGameResponse(false, "game session does not exist");
+        } else if (state == GameState.State.UNSTARTED) {
+            response = new EndGameResponse(false, "game is not started yet, cannot end");
+        } else if (state == GameState.State.FINISHED) {
+            response = new EndGameResponse(false, "game is already finished, cannot end");
+        } else if (state == GameState.State.STARTED) {
+            gameSessions.removeSession(sessionId);
+            response = new EndGameResponse(true, "game has ended");
+        }
+        return response;
     }
 
 

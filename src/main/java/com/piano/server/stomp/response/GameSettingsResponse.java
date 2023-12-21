@@ -2,10 +2,12 @@ package com.piano.server.stomp.response;
 
 public class GameSettingsResponse {
 
-    public boolean success;
+    private boolean success;
+    private String message;
 
-    public GameSettingsResponse(boolean success) {
+    public GameSettingsResponse(boolean success, String message) {
         this.success = success;
+        this.message = message;
     }
 
     public boolean isSuccess() {
@@ -14,5 +16,13 @@ public class GameSettingsResponse {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

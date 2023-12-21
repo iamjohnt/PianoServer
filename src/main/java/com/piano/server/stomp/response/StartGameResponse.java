@@ -1,28 +1,32 @@
 package com.piano.server.stomp.response;
 
+import com.piano.server.game.music.Chord;
+
+import java.util.List;
+
 public class StartGameResponse {
 
-    private Boolean isStartSuccess;
-    private String message;
+    private Boolean isStartGameSuccess;
+    private List<Chord> chordSequence;
 
-    public StartGameResponse(Boolean isStartSuccess, String message) {
-        this.isStartSuccess = isStartSuccess;
-        this.message = message;
+    public StartGameResponse(Boolean isStartGameSuccess, List<Chord> chordSequence) {
+        this.isStartGameSuccess = isStartGameSuccess;
+        this.chordSequence = chordSequence;
     }
 
-    public Boolean getStartSuccess() {
-        return isStartSuccess;
+    public Boolean getStartGameSuccess() {
+        return isStartGameSuccess;
     }
 
-    public void setStartSuccess(Boolean startSuccess) {
-        isStartSuccess = startSuccess;
+    public void setStartGameSuccess(Boolean startSuccess) {
+        isStartGameSuccess = startSuccess;
     }
 
-    public String getMessage() {
-        return message;
+    public List<Chord> getChordSequence() {
+        return chordSequence;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setChordSequence(List<Chord> chordSequence) {
+        this.chordSequence = chordSequence;
     }
 }

@@ -97,5 +97,23 @@ public class GameSessionTest {
         assertEquals(result.getCorrectChord(), null);
     }
 
+    @Test
+    void test_submit_wrong_chord() {
+        Config config = new Config()
+                .setChordPool(ChordPool.NOTE)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.RIGHT)
+                .setRightMin(60)
+                .setRightMax(60)
+                .setLength(1);
+
+        GameSession session = new GameSession(session_id, config);
+        session.startGame();
+
+        ChordResponse result = session.checkChordAdvanceIfCorrect(new Chord(61));
+        assertFalse(result.getIsCorrect());
+    }
+
 }
 

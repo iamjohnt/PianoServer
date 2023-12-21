@@ -6,13 +6,15 @@ public class GameState {
     public enum State {
         UNSTARTED,
         STARTED,
-        FINISHED
+        FINISHED,
+        STARTING,
+        FINISHING
     }
 
     private State currentState;
 
     public GameState() {
-
+        this.currentState = State.UNSTARTED;
     }
 
     public GameState(State currentState) {

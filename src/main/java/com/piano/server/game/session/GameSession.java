@@ -4,6 +4,7 @@ import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.Config;
 import com.piano.server.game.music.MusicMakable;
 import com.piano.server.game.music.MusicMakerFactory;
+import com.piano.server.game.util.GameState;
 import com.piano.server.stomp.response.ChordResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class GameSession {
 
+    private GameState state;
     private MusicMakable musicMaker;
     private String session_id;
     private int session_user_id;
@@ -24,6 +26,7 @@ public class GameSession {
     }
 
     public GameSession(String session_id, Config config) {
+        state = new GameState(GameState.State.UNSTARTED);
         MusicMakerFactory factory = new MusicMakerFactory();
         this.musicMaker = factory.buildMusicMaker(config);
         this.session_id = session_id;
@@ -36,16 +39,20 @@ public class GameSession {
     }
 
     public void startGame() {
+        state.setCurrentState(GameState.State.STARTING);
         music = musicMaker.makeMusic();
         curChordPointer = 0;
         log.info("music list: " + music.toString());
         log.info("current chord: " + music.get(0).toString() + " current chord index: " + Integer.toString(curChordPointer) + "\n");
+        state.setCurrentState(GameState.State.STARTED);
     }
 
     public void endGame() {
+        state.setCurrentState(GameState.State.FINISHING);
         music = null;
         curChordPointer = 0;
         log.info("user ended game");
+        state.setCurrentState(GameState.State.FINISHED);
     }
 
     public ChordResponse checkChordAdvanceIfCorrect(Chord chordSubmission) {

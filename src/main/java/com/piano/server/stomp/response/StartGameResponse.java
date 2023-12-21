@@ -7,10 +7,12 @@ import java.util.List;
 public class StartGameResponse {
 
     private Boolean isStartGameSuccess;
+    private String message;
     private List<Chord> chordSequence;
 
-    public StartGameResponse(Boolean isStartGameSuccess, List<Chord> chordSequence) {
+    public StartGameResponse(Boolean isStartGameSuccess, String message, List<Chord> chordSequence) {
         this.isStartGameSuccess = isStartGameSuccess;
+        this.message = message;
         this.chordSequence = chordSequence;
     }
 
@@ -28,5 +30,13 @@ public class StartGameResponse {
 
     public void setChordSequence(List<Chord> chordSequence) {
         this.chordSequence = chordSequence;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

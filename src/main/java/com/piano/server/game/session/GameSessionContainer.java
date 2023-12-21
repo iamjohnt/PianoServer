@@ -19,4 +19,9 @@ public class GameSessionContainer {
         return this.gameSessions.getOrDefault(session_id, null);
     }
 
+    public boolean constainsSession(String sessionId) {
+        return this.gameSessions.containsKey(sessionId);
+    }
+
+
 }

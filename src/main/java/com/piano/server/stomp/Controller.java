@@ -111,6 +111,16 @@ public class Controller {
         return response;
     }
 
+    @MessageMapping("/startsession")
+    @SendTo("/topic/chord")
+    public CreateSessionResponse handleStartSession(@Header("simpSessionId") String sessionId, CreateSessionSubmission startSessionSubmission) {
+        if (gameSessions.constainsSession(sessionId)) {
+            return new CreateSessionResponse(false, "session is already created");
+        } else {
+            return new CreateSessionResponse(true, "session has been created");
+        }
+    }
+
     @MessageMapping("/endsession")
     @SendTo("/topic/chord")
     public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {

@@ -42,6 +42,12 @@ public class GameSession {
         log.info("current chord: " + music.get(0).toString() + " current chord index: " + Integer.toString(curChordPointer) + "\n");
     }
 
+    public void endGame() {
+        music = null;
+        curChordPointer = 0;
+        log.info("user ended game");
+    }
+
     public ChordResponse checkChordAdvanceIfCorrect(Chord chordSubmission) {
 
         if (music == null) {

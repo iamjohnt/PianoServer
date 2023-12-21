@@ -115,5 +115,28 @@ public class GameSessionTest {
         assertFalse(result.getIsCorrect());
     }
 
+    @Test
+    void test_end_game() {
+        Config config = new Config()
+                .setChordPool(ChordPool.NOTE)
+                .setKeySigNote(KeySigNote.C)
+                .setKeySigMode(KeySigMode.MAJOR)
+                .setHands(WhichHands.RIGHT)
+                .setRightMin(60)
+                .setRightMax(60)
+                .setLength(3);
+
+        GameSession session = new GameSession(session_id, config);
+        session.startGame();
+
+        session.checkChordAdvanceIfCorrect(new Chord(60));
+        session.checkChordAdvanceIfCorrect(new Chord(60));
+
+        session.endGame();
+
+        ChordResponse response = session.checkChordAdvanceIfCorrect(new Chord(60));
+        assertEquals(response.getCorrectChord(), null);
+    }
+
 }
 

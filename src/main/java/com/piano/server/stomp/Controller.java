@@ -104,7 +104,7 @@ public class Controller {
         } else if (state == GameState.State.FINISHED) {
             response = new EndGameResponse(false, "game is already finished, cannot end");
         } else if (state == GameState.State.STARTED) {
-            gameSessions.removeSession(sessionId);
+            session.endGame();
             response = new EndGameResponse(true, "game has ended");
         }
         return response;

@@ -45,7 +45,7 @@ public class Controller {
 
     @MessageMapping("/settings")
     @SendTo("/topic/chord")
-    public GameSettingsResponse handleGameSettings(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) throws Exception {
+    public GameSettingsResponse handleGameSettings(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) {
 
         Timestamp ts = Timestamp.from(Instant.now());
 

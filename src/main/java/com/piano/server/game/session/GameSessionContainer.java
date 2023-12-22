@@ -7,7 +7,7 @@ public class GameSessionContainer {
 
     private Map<String, GameSession> gameSessions = new HashMap();
 
-    public void addSession(String session_id, GameSession gameSession) {
+    public void putSession(String session_id, GameSession gameSession) {
         this.gameSessions.put(session_id, gameSession);
     }
 

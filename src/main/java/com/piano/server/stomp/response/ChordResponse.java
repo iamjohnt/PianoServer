@@ -59,6 +59,22 @@ public class ChordResponse {
         return isCorrect;
     }
 
+    public Boolean getChordProcessedSuccess() {
+        return isChordProcessedSuccess;
+    }
+
+    public void setChordProcessedSuccess(Boolean chordProcessedSuccess) {
+        isChordProcessedSuccess = chordProcessedSuccess;
+    }
+
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
+
     @Override
     public String toString() {
         return "ChordResponse{" +

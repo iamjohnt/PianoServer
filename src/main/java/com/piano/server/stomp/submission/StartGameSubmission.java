@@ -5,7 +5,7 @@ public class StartGameSubmission {
     // value does not matter, it can be anything. only thing that matters is that this message is received, and the game is started
     private String start;
 
-    public StartGameSubmission(String start) {
+    public StartGameSubmission() {
         this.start = start;
     }
 

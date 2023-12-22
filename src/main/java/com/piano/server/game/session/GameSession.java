@@ -84,6 +84,12 @@ public class GameSession {
         }
     }
 
+    public void setConfig(Config config) {
+        MusicMakerFactory factory = new MusicMakerFactory();
+        this.musicMaker = factory.buildMusicMaker(config);
+    }
+
+
     public List<Chord> getMusic() {
         return music;
     }

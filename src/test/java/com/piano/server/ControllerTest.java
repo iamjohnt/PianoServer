@@ -4,8 +4,12 @@ import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
 import com.piano.server.stomp.response.CreateSessionResponse;
+import com.piano.server.stomp.response.EndSessionResponse;
+import com.piano.server.stomp.response.EndSessionSubmission;
+import com.piano.server.stomp.response.StartGameResponse;
 import com.piano.server.stomp.submission.CreateSessionSubmission;
 import com.piano.server.stomp.submission.GameSettingsSubmission;
+import com.piano.server.stomp.submission.StartGameSubmission;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,4 +50,15 @@ public class ControllerTest {
         CreateSessionResponse response = controller.handleCreateSession(sessionIdTest, submission);
         assertTrue(response.getIsCreateSessionSuccess());
     }
+
+    @Test
+    void test_delete_session() {
+        CreateSessionSubmission submission = new CreateSessionSubmission();
+        controller.handleCreateSession(sessionIdTest, submission);
+
+        EndSessionResponse response = controller.handleEndSession(sessionIdTest, new EndSessionSubmission());
+        System.out.println(response.getMessage());
+        assertTrue(response.isEndSessionSuccess());
+    }
+
 }

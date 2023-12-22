@@ -122,8 +122,12 @@ public class Controller {
     @MessageMapping("/endsession")
     @SendTo("/topic/chord")
     public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {
-        gameSessions.removeSession(sessionId);
-        return new EndSessionResponse();
+        if (gameSessions.constainsSession(sessionId)) {
+            gameSessions.removeSession(sessionId);
+            return new EndSessionResponse(true, "session has been ended");
+        } else {
+            return new EndSessionResponse(false, "session does not exist, could not end");
+        }
     }
 
     @Autowired

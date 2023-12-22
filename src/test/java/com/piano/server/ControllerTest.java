@@ -5,6 +5,7 @@ import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
 import com.piano.server.stomp.response.*;
+import com.piano.server.stomp.submission.ChordSubmission;
 import com.piano.server.stomp.submission.CreateSessionSubmission;
 import com.piano.server.stomp.submission.GameSettingsSubmission;
 import com.piano.server.stomp.submission.StartGameSubmission;
@@ -12,7 +13,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,5 +83,40 @@ public class ControllerTest {
         assertTrue(response.getStartGameSuccess());
     }
 
+    @Test
+    void test_send_chord_game() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> chordSet = new HashSet<>();
+        chordSet.add(60);
+        ChordResponse response = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
+        assertTrue(response.getChordProcessedSuccess());
+    }
+
+    @Test
+    void test_try_play_past_end_of_game() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> chordSet = new HashSet<>();
+        chordSet.add(60);
+        ChordResponse one = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
+        ChordResponse two = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
+        ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
+        ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
+
+        System.out.println(one.getIsCorrect());
+        System.out.println(two.getIsCorrect());
+        System.out.println(three.getIsCorrect());
+        System.out.println(four.getIsCorrect());
+
+        assertTrue(one.isCorrect());
+        assertTrue(two.isCorrect());
+        assertTrue(three.isCorrect());
+        assertFalse(four.getChordProcessedSuccess());
+    }
 
 }

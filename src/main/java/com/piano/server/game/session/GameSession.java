@@ -61,23 +61,23 @@ public class GameSession {
 
         if (music == null) {
             log.info("game has not started yet");
-            return new ChordResponse(chordSubmission, null, false);
+            return new ChordResponse(false, chordSubmission, null, null);
         }
 
         if (curChordPointer >= music.size()) {
             log.info("reached end of music");
-            return new ChordResponse(chordSubmission, null, false);
+            return new ChordResponse(false, chordSubmission, null, null);
         }
 
         if (chordSubmission.equals(music.get(curChordPointer))) {
-            ChordResponse rtn = new ChordResponse(chordSubmission, music.get(curChordPointer), true);
+            ChordResponse rtn = new ChordResponse(true, chordSubmission, music.get(curChordPointer), true);
             curChordPointer++;
             return rtn;
 //            log.info("correct :^) " + chordSubmission.toString());
 //            log.info("curr music: " + music.toString());
 //            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");
         } else {
-            return new ChordResponse(chordSubmission, music.get(curChordPointer), false);
+            return new ChordResponse(true, chordSubmission, music.get(curChordPointer), false);
 //            log.info("IN-CORRECT! " + chordSubmission.toString());
 //            log.info("curr music: " + music.toString());
 //            log.info("curr chord: " + music.get(curChordPointer) + " curr index: " + Integer.toString(curChordPointer) + "\n");

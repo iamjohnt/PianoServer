@@ -1,5 +1,6 @@
 package com.piano.server;
 
+import com.piano.server.game.music.Chord;
 import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
@@ -10,6 +11,8 @@ import com.piano.server.stomp.submission.StartGameSubmission;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,6 +70,15 @@ public class ControllerTest {
         assertTrue(response.isSuccess());
     }
 
+    @Test
+    void test_start_game() {
+        CreateSessionSubmission submission = new CreateSessionSubmission();
+        controller.handleCreateSession(sessionIdTest, submission);
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+
+        StartGameResponse response = controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+        assertTrue(response.getStartGameSuccess());
+    }
 
 
 }

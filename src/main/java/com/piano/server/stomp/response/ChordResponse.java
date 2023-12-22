@@ -8,16 +8,19 @@ public class ChordResponse {
     public ChordResponse() {
     }
 
-    public ChordResponse(Chord submittedChord, Chord correctChord, Boolean isCorrect) {
+    private Boolean isChordProcessedSuccess;
+    private Chord submittedChord;
+    private Chord correctChord;
+    private Boolean isCorrect;
+    private Boolean musicSequenceString;
+
+    public ChordResponse(Boolean isChordProcessedSuccess, Chord submittedChord, Chord correctChord, Boolean isCorrect) {
+        this.isChordProcessedSuccess = isChordProcessedSuccess;
         this.submittedChord = submittedChord;
         this.correctChord = correctChord;
         this.isCorrect = isCorrect;
     }
 
-    private Chord submittedChord;
-    private Chord correctChord;
-    private Boolean isCorrect;
-    private Boolean musicSequenceString;
 
 
     public Boolean getMusicSequenceString() {

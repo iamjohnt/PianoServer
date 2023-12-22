@@ -61,7 +61,7 @@ public class Controller {
                 .setRightMax(settings.getRightMax());
 
         GameSession session = new GameSession(sessionId, config);
-        gameSessions.addSession(sessionId, session);
+        gameSessions.putSession(sessionId, session);
         return new GameSettingsResponse(true, "game settings applied");
     }
 
@@ -115,6 +115,7 @@ public class Controller {
         if (gameSessions.constainsSession(sessionId)) {
             return new CreateSessionResponse(false, "session is already created");
         } else {
+            gameSessions.putSession(sessionId, new GameSession(sessionId));
             return new CreateSessionResponse(true, "session has been created");
         }
     }

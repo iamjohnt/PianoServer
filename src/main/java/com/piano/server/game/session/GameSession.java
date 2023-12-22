@@ -21,8 +21,10 @@ public class GameSession {
     private int curChordPointer;
     private Logger log;
 
-    public GameSession() {
-        session_id = "1";
+    public GameSession(String session_id) {
+        this.state = new GameState(GameState.State.UNSTARTED);
+        this.session_id = session_id;
+        log = LoggerFactory.getLogger(GameSession.class);
     }
 
     public GameSession(String session_id, Config config) {

@@ -28,14 +28,14 @@ public class Controller {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public TestResponse greeting(@Header("simpSessionId") String sessionId, TestSubmission message) throws Exception {
+    public TestResponse greeting(@Header("simpSessionId") String sessionId, TestSubmission message) {
         System.out.println(sessionId);
         return new TestResponse("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 
     @MessageMapping("/chord")
     @SendTo("/topic/chord")
-    public ChordResponse handleChord(@Header("simpSessionId") String sessionId, ChordSubmission message) throws Exception {
+    public ChordResponse handleChord(@Header("simpSessionId") String sessionId, ChordSubmission message) {
         Timestamp ts = Timestamp.from(Instant.now());
         GameSession session = this.gameSessions.getSession(sessionId);
         Chord chord = new Chord(message.getChord());

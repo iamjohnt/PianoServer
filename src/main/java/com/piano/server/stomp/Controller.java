@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.HtmlUtils;
 
@@ -27,8 +28,8 @@ public class Controller {
     private GameState gameState;
 
     @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public TestResponse greeting(@Header("simpSessionId") String sessionId, TestSubmission message) {
+    @SendToUser("/queue/greetings")
+    public TestResponse handleHello(@Header("simpSessionId") String sessionId, TestSubmission message) {
         System.out.println(sessionId);
         return new TestResponse("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }

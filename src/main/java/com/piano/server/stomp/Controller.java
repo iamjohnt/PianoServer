@@ -35,7 +35,7 @@ public class Controller {
     }
 
     @MessageMapping("/chord")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public ChordResponse handleChord(@Header("simpSessionId") String sessionId, ChordSubmission message) {
         Timestamp ts = Timestamp.from(Instant.now());
         GameSession session = this.gameSessions.getSession(sessionId);
@@ -45,7 +45,7 @@ public class Controller {
     }
 
     @MessageMapping("/settings")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public GameSettingsResponse handleGameSettings(@Header("simpSessionId") String sessionId, GameSettingsSubmission settings) {
 
         Timestamp ts = Timestamp.from(Instant.now());
@@ -67,7 +67,7 @@ public class Controller {
     }
 
     @MessageMapping("/startgame")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public StartGameResponse handleStartGame(@Header("simpSessionId") String sessionId, StartGameSubmission start) {
 
         StartGameResponse response = null;
@@ -93,7 +93,7 @@ public class Controller {
 
 
     @MessageMapping("/endgame")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public EndGameResponse handleEndGame(@Header("simpSessionId") String sessionId, EndGameSubmission end) {
         EndGameResponse response = null;
         GameState.State state = gameState.getCurrentState();
@@ -111,7 +111,7 @@ public class Controller {
     }
 
     @MessageMapping("/startsession")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public CreateSessionResponse handleCreateSession(@Header("simpSessionId") String sessionId, CreateSessionSubmission startSessionSubmission) {
         if (gameSessions.constainsSession(sessionId)) {
             return new CreateSessionResponse(false, "session is already created");
@@ -122,7 +122,7 @@ public class Controller {
     }
 
     @MessageMapping("/endsession")
-    @SendTo("/topic/chord")
+    @SendToUser("/queue/greetings")
     public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {
         if (gameSessions.constainsSession(sessionId)) {
             gameSessions.removeSession(sessionId);

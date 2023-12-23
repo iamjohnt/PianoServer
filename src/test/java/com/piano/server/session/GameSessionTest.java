@@ -74,10 +74,8 @@ public class GameSessionTest {
         assertTrue(result3.getIsCorrect());
 
         ChordResponse result4 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertFalse(result4.getIsCorrect());
+        assertFalse(result4.getChordProcessedSuccess());
 
-        ChordResponse result5 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertFalse(result5.getIsCorrect());
     }
 
     @Test

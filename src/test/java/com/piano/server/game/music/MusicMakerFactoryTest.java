@@ -55,7 +55,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 2);
+            assertTrue(curChord.getChordSet().size() == 2);
         }
     }
 
@@ -78,7 +78,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 3);
+            assertTrue(curChord.getChordSet().size() == 3);
         }
     }
 
@@ -100,7 +100,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 4);
+            assertTrue(curChord.getChordSet().size() == 4);
         }
     }
 
@@ -124,10 +124,10 @@ public class MusicMakerFactoryTest {
         boolean hasNotes = false;
         boolean hasIntervals = false;
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChordSet().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChordSet().size() == 2) {
                 hasIntervals = true;
             }
         }
@@ -156,13 +156,13 @@ public class MusicMakerFactoryTest {
         boolean hasIntervals = false;
         boolean hasTriads = false;
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChordSet().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChordSet().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getLength() == 3) {
+            if (curChord.getChordSet().size() == 3) {
                 hasTriads = true;
             }
         }
@@ -194,16 +194,16 @@ public class MusicMakerFactoryTest {
         boolean hasTetrads = false;
 
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChordSet().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChordSet().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getLength() == 3) {
+            if (curChord.getChordSet().size() == 3) {
                 hasTriads = true;
             }
-            if (curChord.getLength() == 4) {
+            if (curChord.getChordSet().size() == 4) {
                 hasTetrads = true;
             }
         }

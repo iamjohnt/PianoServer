@@ -784,16 +784,16 @@ public class MusicMakerRandomTest {
 
         Chord expected = new Chord(60);
         for (Chord actual : music) {
-            if (actual.getChordSet().size() == 1) {
+            if (actual.getChord().size() == 1) {
                 hasNote = true;
             }
-            if (actual.getChordSet().size() == 2) {
+            if (actual.getChord().size() == 2) {
                 hasInterval = true;
             }
-            if (actual.getChordSet().size() == 3) {
+            if (actual.getChord().size() == 3) {
                 hasTriad = true;
             }
-            if (actual.getChordSet().size() == 4) {
+            if (actual.getChord().size() == 4) {
                 hasTetrad = true;
             }
         }

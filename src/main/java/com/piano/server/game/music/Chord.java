@@ -19,7 +19,7 @@ public class Chord {
         }
     }
 
-    public Set<Integer> getChordSet() {
+    public Set<Integer> getChord() {
         return this.chord;
     }
 
@@ -48,7 +48,7 @@ public class Chord {
             return false;
         }
         Chord casted = (Chord) o;
-        return this.chord.equals(casted.getChordSet());
+        return this.chord.equals(casted.getChord());
     }
 
 

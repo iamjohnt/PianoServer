@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import java.util.List;
 
 public class MusicMakerFactoryTest {
 
@@ -55,7 +54,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getChordSet().size() == 2);
+            assertTrue(curChord.getChord().size() == 2);
         }
     }
 
@@ -78,7 +77,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getChordSet().size() == 3);
+            assertTrue(curChord.getChord().size() == 3);
         }
     }
 
@@ -100,7 +99,7 @@ public class MusicMakerFactoryTest {
         List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getChordSet().size() == 4);
+            assertTrue(curChord.getChord().size() == 4);
         }
     }
 
@@ -124,10 +123,10 @@ public class MusicMakerFactoryTest {
         boolean hasNotes = false;
         boolean hasIntervals = false;
         for (Chord curChord : music) {
-            if (curChord.getChordSet().size() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getChordSet().size() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
         }
@@ -156,13 +155,13 @@ public class MusicMakerFactoryTest {
         boolean hasIntervals = false;
         boolean hasTriads = false;
         for (Chord curChord : music) {
-            if (curChord.getChordSet().size() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getChordSet().size() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getChordSet().size() == 3) {
+            if (curChord.getChord().size() == 3) {
                 hasTriads = true;
             }
         }
@@ -194,16 +193,16 @@ public class MusicMakerFactoryTest {
         boolean hasTetrads = false;
 
         for (Chord curChord : music) {
-            if (curChord.getChordSet().size() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getChordSet().size() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getChordSet().size() == 3) {
+            if (curChord.getChord().size() == 3) {
                 hasTriads = true;
             }
-            if (curChord.getChordSet().size() == 4) {
+            if (curChord.getChord().size() == 4) {
                 hasTetrads = true;
             }
         }

@@ -19,16 +19,12 @@ public class Chord {
         }
     }
 
-    public List<Integer> getChordList() {
-        return this.chord.stream().sorted().toList();
-    }
-
-    public Set<Integer> getChordSet() {
+    public Set<Integer> getChord() {
         return this.chord;
     }
 
     public boolean isInBounds(int min, int max) {
-        List<Integer> notes = getChordList();
+        List<Integer> notes = this.chord.stream().sorted().toList();
         int bot = notes.get(0);
         int top = notes.get(notes.size() - 1);
         return
@@ -38,13 +34,9 @@ public class Chord {
             top <= max;
     }
 
-    public int getLength() {
-        return chord.size();
-    }
-
     @Override
     public String toString() {
-        return getChordList().toString();
+        return this.chord.toString();
     }
 
     @Override
@@ -56,7 +48,7 @@ public class Chord {
             return false;
         }
         Chord casted = (Chord) o;
-        return this.chord.equals(casted.getChordSet());
+        return this.chord.equals(casted.getChord());
     }
 
 

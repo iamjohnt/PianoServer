@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Deque;
+import java.util.List;
 
 public class MusicMakerRandomTest {
 
@@ -69,7 +69,7 @@ public class MusicMakerRandomTest {
                 .setLength(config.getLength())
                 .setChordMakerPool(pool);
 
-        Deque<Chord> music = randomNoteMaker.makeMusic();
+        List<Chord> music = randomNoteMaker.makeMusic();
 
         System.out.println(music);
     }
@@ -103,9 +103,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 62);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -135,9 +135,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 64);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -167,9 +167,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 65);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -199,9 +199,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 67);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -230,9 +230,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 69);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -261,9 +261,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 71);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -292,9 +292,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 72);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
     }
@@ -329,9 +329,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 64, 67);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -361,9 +361,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 62, 67);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -393,9 +393,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 65, 67);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -425,9 +425,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(64, 67, 72);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -457,9 +457,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(64, 67, 72);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -488,9 +488,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 65, 69);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -519,9 +519,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 65, 69);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
     }
@@ -556,9 +556,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 64, 67, 72);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -587,9 +587,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 65, 69, 72);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
 
@@ -618,9 +618,9 @@ public class MusicMakerRandomTest {
                     .setLength(config.getLength())
                     .setChordMakerPool(pool);
 
-            Deque<Chord> music = randomNoteMaker.makeMusic();
+            List<Chord> music = randomNoteMaker.makeMusic();
             Chord expected = new Chord(60, 64, 67, 71);
-            Chord actual = music.pop();
+            Chord actual = music.get(0);
             assertEquals(expected, actual);
         }
     }
@@ -652,7 +652,7 @@ public class MusicMakerRandomTest {
                 .setLength(config.getLength())
                 .setChordMakerPool(pool);
 
-        Deque<Chord> music = randomNoteMaker.makeMusic();
+        List<Chord> music = randomNoteMaker.makeMusic();
         Chord expected = new Chord(48);
         for (Chord actual : music) {
             assertEquals(expected, actual);
@@ -687,7 +687,7 @@ public class MusicMakerRandomTest {
                 .setLength(config.getLength())
                 .setChordMakerPool(pool);
 
-        Deque<Chord> music = randomNoteMaker.makeMusic();
+        List<Chord> music = randomNoteMaker.makeMusic();
         Chord expected = new Chord(60);
         for (Chord actual : music) {
             assertEquals(expected, actual);
@@ -721,7 +721,7 @@ public class MusicMakerRandomTest {
                 .setLength(config.getLength())
                 .setChordMakerPool(pool);
 
-        Deque<Chord> music = randomNoteMaker.makeMusic();
+        List<Chord> music = randomNoteMaker.makeMusic();
 
         Chord leftExpected = new Chord(48);
         Chord rightExpected = new Chord(48);
@@ -775,7 +775,7 @@ public class MusicMakerRandomTest {
                 .setLength(config.getLength())
                 .setChordMakerPool(pool);
 
-        Deque<Chord> music = randomNoteMaker.makeMusic();
+        List<Chord> music = randomNoteMaker.makeMusic();
 
         boolean hasNote = false;
         boolean hasInterval = false;
@@ -784,16 +784,16 @@ public class MusicMakerRandomTest {
 
         Chord expected = new Chord(60);
         for (Chord actual : music) {
-            if (actual.getLength() == 1) {
+            if (actual.getChord().size() == 1) {
                 hasNote = true;
             }
-            if (actual.getLength() == 2) {
+            if (actual.getChord().size() == 2) {
                 hasInterval = true;
             }
-            if (actual.getLength() == 3) {
+            if (actual.getChord().size() == 3) {
                 hasTriad = true;
             }
-            if (actual.getLength() == 4) {
+            if (actual.getChord().size() == 4) {
                 hasTetrad = true;
             }
         }

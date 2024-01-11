@@ -1,26 +1,27 @@
-package com.piano.server.stomp;
+package com.piano.server.stomp.submission;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Set;
 
 public class ChordSubmission {
 
     @JsonProperty("chord")
-    private List<Integer> chord;
+    private Set<Integer> chord;
 
     public ChordSubmission() {
     }
 
-    public ChordSubmission(List<Integer> chord) {
+    public ChordSubmission(Set<Integer> chord) {
         this.chord = chord;
     }
 
-    public List<Integer> getChord() {
+    public Set<Integer> getChord() {
         return chord;
     }
 
-    public void setChord(List<Integer> chord) {
+    public void setChord(Set<Integer> chord) {
         this.chord = chord;
     }
 

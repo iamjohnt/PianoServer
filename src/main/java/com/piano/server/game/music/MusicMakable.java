@@ -1,9 +1,9 @@
 package com.piano.server.game.music;
 
-import java.util.Deque;
+import java.util.List;
 
 public interface MusicMakable {
 
-    public Deque<Chord> makeMusic();
+    public List<Chord> makeMusic();
 
 }

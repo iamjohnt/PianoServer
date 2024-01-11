@@ -7,7 +7,7 @@ import com.piano.server.game.util.WhichHands;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Deque;
+import java.util.List;
 
 public class MusicMakerFactoryTest {
 
@@ -26,7 +26,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         Chord expectedLeft = new Chord(48);
         Chord expectedRight = new Chord(60);
@@ -51,10 +51,10 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 2);
+            assertTrue(curChord.getChord().size() == 2);
         }
     }
 
@@ -74,10 +74,10 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 3);
+            assertTrue(curChord.getChord().size() == 3);
         }
     }
 
@@ -96,10 +96,10 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         for (Chord curChord : music) {
-            assertTrue(curChord.getLength() == 4);
+            assertTrue(curChord.getChord().size() == 4);
         }
     }
 
@@ -118,15 +118,15 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
         }
@@ -149,19 +149,19 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;
         boolean hasTriads = false;
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getLength() == 3) {
+            if (curChord.getChord().size() == 3) {
                 hasTriads = true;
             }
         }
@@ -185,7 +185,7 @@ public class MusicMakerFactoryTest {
 
         MusicMakerFactory factory = new MusicMakerFactory();
         MusicMakable maker = factory.buildMusicMaker(config);
-        Deque<Chord> music = maker.makeMusic();
+        List<Chord> music = maker.makeMusic();
 
         boolean hasNotes = false;
         boolean hasIntervals = false;
@@ -193,16 +193,16 @@ public class MusicMakerFactoryTest {
         boolean hasTetrads = false;
 
         for (Chord curChord : music) {
-            if (curChord.getLength() == 1) {
+            if (curChord.getChord().size() == 1) {
                 hasNotes = true;
             }
-            if (curChord.getLength() == 2) {
+            if (curChord.getChord().size() == 2) {
                 hasIntervals = true;
             }
-            if (curChord.getLength() == 3) {
+            if (curChord.getChord().size() == 3) {
                 hasTriads = true;
             }
-            if (curChord.getLength() == 4) {
+            if (curChord.getChord().size() == 4) {
                 hasTetrads = true;
             }
         }

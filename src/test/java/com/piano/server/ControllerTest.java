@@ -108,15 +108,68 @@ public class ControllerTest {
         ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
         ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
 
-        System.out.println(one.getIsCorrect());
-        System.out.println(two.getIsCorrect());
-        System.out.println(three.getIsCorrect());
-        System.out.println(four.getIsCorrect());
-
         assertTrue(one.isCorrect());
         assertTrue(two.isCorrect());
         assertTrue(three.isCorrect());
         assertFalse(four.getChordProcessedSuccess());
     }
+
+
+    @Test
+    void test_send_incorrect() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> correct = new HashSet<>();
+        correct.add(60);
+
+        Set<Integer> wrong = new HashSet<>();
+        wrong.add(61);
+
+        ChordResponse one = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse two = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+
+        assertTrue(one.isCorrect());
+        assertTrue(two.isCorrect());
+
+        assertFalse(three.isCorrect());
+        assertFalse(four.isCorrect());
+        assertFalse(five.isCorrect());
+
+    }
+
+
+    @Test
+    void test_send_incorrect_then_all_correct() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> correct = new HashSet<>();
+        correct.add(60);
+
+        Set<Integer> wrong = new HashSet<>();
+        wrong.add(61);
+
+        ChordResponse one = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse two = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+
+        assertTrue(one.isCorrect());
+        assertTrue(two.isCorrect());
+
+        assertFalse(three.isCorrect());
+        assertFalse(four.isCorrect());
+
+        assertTrue(five.isCorrect());
+
+    }
+
 
 }

@@ -9,5 +9,6 @@ RUN --mount=type=cache,target=/root/.m2 mvn -e clean package -Dmaven.test.skip=t
 FROM --platform=arm64 amazoncorretto:17
 WORKDIR /app
 COPY --from=build /app/target/ws_server-0.0.1.jar ./app.jar
+#COPY src/main/resources ./
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]

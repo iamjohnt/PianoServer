@@ -63,18 +63,18 @@ public class GameSessionTest {
         System.out.println(session);
 
         ChordResponse result1 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertTrue(result1.getIsCorrect());
+        assertTrue(result1.isSubmissionCorrect());
 
         System.out.println(session);
 
         ChordResponse result2 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertTrue(result2.getIsCorrect());
+        assertTrue(result2.isSubmissionCorrect());
 
         ChordResponse result3 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertTrue(result3.getIsCorrect());
+        assertTrue(result3.isSubmissionCorrect());
 
         ChordResponse result4 = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertFalse(result4.getChordProcessedSuccess());
+        assertFalse(result4.getIsChordProcessedSuccess());
 
     }
 
@@ -92,7 +92,7 @@ public class GameSessionTest {
         GameSession session = new GameSession(session_id, config);
 
         ChordResponse result = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertEquals(result.getCorrectChord(), null);
+        assertEquals(result.getActualChord(), null);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class GameSessionTest {
         session.startGame();
 
         ChordResponse result = session.checkChordAdvanceIfCorrect(new Chord(61));
-        assertFalse(result.getIsCorrect());
+        assertFalse(result.isSubmissionCorrect());
     }
 
     @Test
@@ -133,7 +133,7 @@ public class GameSessionTest {
         session.endGame();
 
         ChordResponse response = session.checkChordAdvanceIfCorrect(new Chord(60));
-        assertEquals(response.getCorrectChord(), null);
+        assertEquals(response.getActualChord(), null);
     }
 
 }

@@ -9,7 +9,6 @@ import com.piano.server.stomp.response.ChordResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -58,45 +57,61 @@ public class GameSession {
         music = null;
         curChordPointer = 0;
         log.info("user ended game");
-        state.setCurrentState(GameState.State.FINISHED);
+        state.setCurrentState(GameState.State.UNSTARTED);
     }
 
     public ChordResponse checkChordAdvanceIfCorrect(Chord chordSubmission) {
 
+        ChordResponse response = new ChordResponse();
+
         if (music == null) {
             log.info("game has not started yet");
-            return new ChordResponse(false, chordSubmission, null, null);
+            response.setIsChordProcessedSuccess(false)
+                    .setSubmittedChord(chordSubmission)
+                    .setActualChord(null)
+                    .setIsSubmissionCorrect(null)
+                    .setIsGameDone(null);
         }
-
-        if (music.isEmpty()) {
+        else if (music.isEmpty()) {
             log.info("lesson has already ended. following chord submission ignored: " + chordSubmission.toString());
-            return new ChordResponse(false, chordSubmission, null, null);
+            response.setIsChordProcessedSuccess(false)
+                    .setSubmittedChord(chordSubmission)
+                    .setActualChord(null)
+                    .setIsSubmissionCorrect(null)
+                    .setIsGameDone(null);
         }
+        else if (chordSubmission.equals(music.peek())) {
 
-        if (chordSubmission.equals(music.peek())) {
-            ChordResponse rtn = new ChordResponse(true, chordSubmission, music.peek(), true);
-            log.info("---- C O R R E C T:  " + chordSubmission.toString());
-            music.poll();
-            System.out.println("");
-            log.info("chord lesson queue: " + music.toString());
+            log.info("---- C O R R E C T:  " + chordSubmission.toString() + "\n");
+            response.setIsChordProcessedSuccess(true)
+                    .setSubmittedChord(chordSubmission)
+                    .setActualChord(music.poll())
+                    .setIsSubmissionCorrect(true);
+
             if (music.isEmpty()) {
                 log.info("lesson has ended");
+                this.endGame();
+                response.setIsGameDone(true);
+            } else {
+                log.info("chord lesson queue: " + music.toString());
+                response.setIsGameDone(false);
             }
-            return rtn;
         } else {
-            log.info("------- W R O N G :  " + chordSubmission.toString());
-            System.out.println("");
-
+            log.info("------- W R O N G :  " + chordSubmission.toString() + "\n");
             log.info("chord lesson queue: " + music.toString());
-            return new ChordResponse(true, chordSubmission, music.peek(), false);
+            response.setIsChordProcessedSuccess(true)
+                    .setSubmittedChord(chordSubmission)
+                    .setActualChord(music.peek())
+                    .setIsSubmissionCorrect(false)
+                    .setIsGameDone(false);
         }
+        return response;
     }
 
     public void setConfig(Config config) {
         MusicMakerFactory factory = new MusicMakerFactory();
         this.musicMaker = factory.buildMusicMaker(config);
     }
-
 
     public List<Chord> getMusic() {
         return music.stream().collect(Collectors.toCollection(LinkedList::new));

@@ -1,6 +1,5 @@
 package com.piano.server;
 
-import com.piano.server.game.music.Chord;
 import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -92,7 +90,7 @@ public class ControllerTest {
         Set<Integer> chordSet = new HashSet<>();
         chordSet.add(60);
         ChordResponse response = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
-        assertTrue(response.getChordProcessedSuccess());
+        assertTrue(response.getIsChordProcessedSuccess());
     }
 
     @Test
@@ -108,10 +106,10 @@ public class ControllerTest {
         ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
         ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
 
-        assertTrue(one.isCorrect());
-        assertTrue(two.isCorrect());
-        assertTrue(three.isCorrect());
-        assertFalse(four.getChordProcessedSuccess());
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
+        assertTrue(three.isSubmissionCorrect());
+        assertFalse(four.getIsChordProcessedSuccess());
     }
 
 
@@ -133,12 +131,12 @@ public class ControllerTest {
         ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
         ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
 
-        assertTrue(one.isCorrect());
-        assertTrue(two.isCorrect());
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
 
-        assertFalse(three.isCorrect());
-        assertFalse(four.isCorrect());
-        assertFalse(five.isCorrect());
+        assertFalse(three.isSubmissionCorrect());
+        assertFalse(four.isSubmissionCorrect());
+        assertFalse(five.isSubmissionCorrect());
 
     }
 
@@ -161,13 +159,13 @@ public class ControllerTest {
         ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
         ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
 
-        assertTrue(one.isCorrect());
-        assertTrue(two.isCorrect());
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
 
-        assertFalse(three.isCorrect());
-        assertFalse(four.isCorrect());
+        assertFalse(three.isSubmissionCorrect());
+        assertFalse(four.isSubmissionCorrect());
 
-        assertTrue(five.isCorrect());
+        assertTrue(five.isSubmissionCorrect());
 
     }
 

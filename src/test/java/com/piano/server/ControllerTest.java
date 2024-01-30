@@ -1,6 +1,5 @@
 package com.piano.server;
 
-import com.piano.server.game.music.Chord;
 import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -92,7 +90,7 @@ public class ControllerTest {
         Set<Integer> chordSet = new HashSet<>();
         chordSet.add(60);
         ChordResponse response = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
-        assertTrue(response.getChordProcessedSuccess());
+        assertTrue(response.getIsChordProcessedSuccess());
     }
 
     @Test
@@ -108,15 +106,68 @@ public class ControllerTest {
         ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
         ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(chordSet));
 
-        System.out.println(one.getIsCorrect());
-        System.out.println(two.getIsCorrect());
-        System.out.println(three.getIsCorrect());
-        System.out.println(four.getIsCorrect());
-
-        assertTrue(one.isCorrect());
-        assertTrue(two.isCorrect());
-        assertTrue(three.isCorrect());
-        assertFalse(four.getChordProcessedSuccess());
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
+        assertTrue(three.isSubmissionCorrect());
+        assertFalse(four.getIsChordProcessedSuccess());
     }
+
+
+    @Test
+    void test_send_incorrect() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> correct = new HashSet<>();
+        correct.add(60);
+
+        Set<Integer> wrong = new HashSet<>();
+        wrong.add(61);
+
+        ChordResponse one = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse two = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
+
+        assertFalse(three.isSubmissionCorrect());
+        assertFalse(four.isSubmissionCorrect());
+        assertFalse(five.isSubmissionCorrect());
+
+    }
+
+
+    @Test
+    void test_send_incorrect_then_all_correct() {
+        controller.handleCreateSession(sessionIdTest, new CreateSessionSubmission());
+        controller.handleGameSettings(sessionIdTest, defaultSettings);
+        controller.handleStartGame(sessionIdTest, new StartGameSubmission());
+
+        Set<Integer> correct = new HashSet<>();
+        correct.add(60);
+
+        Set<Integer> wrong = new HashSet<>();
+        wrong.add(61);
+
+        ChordResponse one = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse two = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+        ChordResponse three = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse four = controller.handleChord(sessionIdTest, new ChordSubmission(wrong));
+        ChordResponse five = controller.handleChord(sessionIdTest, new ChordSubmission(correct));
+
+        assertTrue(one.isSubmissionCorrect());
+        assertTrue(two.isSubmissionCorrect());
+
+        assertFalse(three.isSubmissionCorrect());
+        assertFalse(four.isSubmissionCorrect());
+
+        assertTrue(five.isSubmissionCorrect());
+
+    }
+
 
 }

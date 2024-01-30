@@ -13,6 +13,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import java.sql.Timestamp;
@@ -21,11 +24,19 @@ import java.time.Instant;
 @org.springframework.stereotype.Controller
 
 @Component
+@RestController
 public class Controller {
 
     private GameSessionContainer gameSessions;
 
     private GameState gameState;
+
+    // for health checks
+    @GetMapping("/")
+    public String helloRest() {
+        return "Health check success!";
+    }
+
 
     @MessageMapping("/hello")
     @SendToUser("/queue/hello")

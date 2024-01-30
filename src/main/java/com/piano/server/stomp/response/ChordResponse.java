@@ -10,77 +10,61 @@ public class ChordResponse {
 
     private Boolean isChordProcessedSuccess;
     private Chord submittedChord;
-    private Chord correctChord;
-    private Boolean isCorrect;
-    private Boolean musicSequenceString;
+    private Chord actualChord;
+    private Boolean isSubmissionCorrect;
+    private Boolean isGameDone;
 
-    public ChordResponse(Boolean isChordProcessedSuccess, Chord submittedChord, Chord correctChord, Boolean isCorrect) {
-        this.isChordProcessedSuccess = isChordProcessedSuccess;
-        this.submittedChord = submittedChord;
-        this.correctChord = correctChord;
-        this.isCorrect = isCorrect;
-    }
-
-
-
-    public Boolean getMusicSequenceString() {
-        return musicSequenceString;
-    }
-
-    public void setMusicSequenceString(Boolean musicSequenceString) {
-        this.musicSequenceString = musicSequenceString;
-    }
-
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
-    public void setIsCorrect(boolean correct) {
-        isCorrect = correct;
+    public Boolean getIsChordProcessedSuccess() {
+        return isChordProcessedSuccess;
     }
 
     public Chord getSubmittedChord() {
         return submittedChord;
     }
 
-    public void setSubmittedChord(Chord submittedChord) {
-        this.submittedChord = submittedChord;
+    public Chord getActualChord() {
+        return actualChord;
     }
 
-    public Chord getCorrectChord() {
-        return correctChord;
+    public Boolean isSubmissionCorrect() {
+        return isSubmissionCorrect;
     }
 
-    public void setCorrectChord(Chord correctChord) {
-        this.correctChord = correctChord;
+    public Boolean getIsGameDone() {
+        return isGameDone;
     }
 
-    public Boolean getIsCorrect() {
-        return isCorrect;
-    }
-
-    public Boolean getChordProcessedSuccess() {
-        return isChordProcessedSuccess;
-    }
-
-    public void setChordProcessedSuccess(Boolean chordProcessedSuccess) {
+    public ChordResponse setIsChordProcessedSuccess(Boolean chordProcessedSuccess) {
         isChordProcessedSuccess = chordProcessedSuccess;
+        return this;
     }
 
-    public Boolean getCorrect() {
-        return isCorrect;
+    public ChordResponse setSubmittedChord(Chord submittedChord) {
+        this.submittedChord = submittedChord;
+        return this;
     }
 
-    public void setCorrect(Boolean correct) {
-        isCorrect = correct;
+    public ChordResponse setActualChord(Chord actualChord) {
+        this.actualChord = actualChord;
+        return this;
+    }
+
+    public ChordResponse setIsSubmissionCorrect(Boolean submissionCorrect) {
+        isSubmissionCorrect = submissionCorrect;
+        return this;
+    }
+
+    public ChordResponse setIsGameDone(Boolean actualChordFinalChord) {
+        isGameDone = actualChordFinalChord;
+        return this;
     }
 
     @Override
     public String toString() {
         return "ChordResponse{" +
                 "submittedChord=" + submittedChord +
-                ", correctChord=" + correctChord +
-                ", isCorrect=" + isCorrect +
+                ", correctChord=" + actualChord +
+                ", isCorrect=" + isSubmissionCorrect +
                 '}';
     }
 }

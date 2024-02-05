@@ -26,6 +26,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://supersightread.com", "https://www.supersightread.com");
+                .setAllowedOrigins("https://supersightread.com", "https://www.supersightread.com", "http://localhost:8090");
     }
 }

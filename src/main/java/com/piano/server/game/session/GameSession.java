@@ -118,6 +118,6 @@ public class GameSession {
     }
 
     public String toString() {
-        return "Session ID: " + session_id + ", Music: " + music.toString() + ", curChordPointer : " + curChordPointer;
+        return session_id;
     }
 }

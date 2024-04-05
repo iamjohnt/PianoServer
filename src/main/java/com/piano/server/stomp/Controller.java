@@ -3,23 +3,21 @@ package com.piano.server.stomp;
 import com.piano.server.game.music.Chord;
 import com.piano.server.game.music.Config;
 import com.piano.server.game.session.GameSession;
-import com.piano.server.game.session.GameSessionContainer;
 import com.piano.server.game.util.GameState;
 import com.piano.server.stomp.response.*;
 import com.piano.server.stomp.submission.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Map;
 
 @org.springframework.stereotype.Controller
 
@@ -27,7 +25,7 @@ import java.time.Instant;
 @RestController
 public class Controller {
 
-    private GameSessionContainer gameSessions;
+    private Map<String, GameSession> gameSessions;
 
     private GameState gameState;
 
@@ -49,7 +47,7 @@ public class Controller {
     @SendToUser("/queue/chord")
     public ChordResponse handleChord(@Header("simpSessionId") String sessionId, ChordSubmission message) {
         Timestamp ts = Timestamp.from(Instant.now());
-        GameSession session = this.gameSessions.getSession(sessionId);
+        GameSession session = this.gameSessions.get(sessionId); //TODO possible null, so can cause null pointer later
         Chord chord = new Chord(message.getChord());
         ChordResponse response = session.checkChordAdvanceIfCorrect(chord);
         return response;
@@ -73,7 +71,7 @@ public class Controller {
                 .setRightMax(settings.getRightMax());
 
         GameSession session = new GameSession(sessionId, config);
-        gameSessions.putSession(sessionId, session);
+        gameSessions.put(sessionId, session);
         return new GameSettingsResponse(true, "game settings applied");
     }
 
@@ -83,7 +81,7 @@ public class Controller {
 
         StartGameResponse response = null;
         GameState.State state = gameState.getCurrentState();
-        GameSession session = gameSessions.getSession(sessionId);
+        GameSession session = gameSessions.get(sessionId);
 
         if (session == null) {
             return new StartGameResponse(false, "game session does not exist", null);
@@ -108,7 +106,7 @@ public class Controller {
     public EndGameResponse handleEndGame(@Header("simpSessionId") String sessionId, EndGameSubmission end) {
         EndGameResponse response = null;
         GameState.State state = gameState.getCurrentState();
-        GameSession session = gameSessions.getSession(sessionId);
+        GameSession session = gameSessions.get(sessionId);
 
         if (session == null) {
             response = new EndGameResponse(false, "game session does not exist");
@@ -124,10 +122,10 @@ public class Controller {
     @MessageMapping("/startsession")
     @SendToUser("/queue/startsession")
     public CreateSessionResponse handleCreateSession(@Header("simpSessionId") String sessionId, CreateSessionSubmission startSessionSubmission) {
-        if (gameSessions.constainsSession(sessionId)) {
+        if (gameSessions.containsKey(sessionId)) {
             return new CreateSessionResponse(false, "session is already created");
         } else {
-            gameSessions.putSession(sessionId, new GameSession(sessionId));
+            gameSessions.put(sessionId, new GameSession(sessionId));
             return new CreateSessionResponse(true, "session has been created");
         }
     }
@@ -135,8 +133,8 @@ public class Controller {
     @MessageMapping("/endsession")
     @SendToUser("/queue/endsession")
     public EndSessionResponse handleEndSession(@Header("simpSessionId") String sessionId, EndSessionSubmission endSession) {
-        if (gameSessions.constainsSession(sessionId)) {
-            gameSessions.removeSession(sessionId);
+        if (gameSessions.containsKey(sessionId)) {
+            gameSessions.remove(sessionId);
             return new EndSessionResponse(true, "session has been ended");
         } else {
             return new EndSessionResponse(false, "session does not exist, could not end");
@@ -144,7 +142,7 @@ public class Controller {
     }
 
     @Autowired
-    public void setGameSessions(GameSessionContainer gameSessions) {
+    public void setGameSessions(Map<String, GameSession> gameSessions) {
         this.gameSessions = gameSessions;
     }
 

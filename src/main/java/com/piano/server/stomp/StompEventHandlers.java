@@ -1,7 +1,6 @@
 package com.piano.server.stomp;
 
 import com.piano.server.game.session.GameSession;
-import com.piano.server.game.session.GameSessionContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.Map;
 
 /*
 handles some STOMP protocol events, such as connect / disconnect
@@ -28,12 +29,12 @@ Full list as of 4/5/2024 - https://docs.spring.io/spring-framework/docs/current/
 public class StompEventHandlers {
 
     private Logger log;
-    private GameSessionContainer sessionContainer;
+    private Map<String, GameSession> gameSessions;
 
     @Autowired
-    public StompEventHandlers(GameSessionContainer sessionContainer) {
+    public StompEventHandlers(Map<String, GameSession> gameSessions) {
         this.log = LoggerFactory.getLogger(GameSession.class);
-        this.sessionContainer = sessionContainer;
+        this.gameSessions = gameSessions;
     }
 
     @EventListener
@@ -47,12 +48,12 @@ public class StompEventHandlers {
     private void onSessionDisconnect(SessionDisconnectEvent event) {
         String sessionId = event.getSessionId();
         log.info("Stomp Session disconnected: " + sessionId);
-        this.sessionContainer.removeSession(sessionId);
+        this.gameSessions.remove(sessionId);
     }
 
     @Scheduled(fixedRate = 10000)
     private void printSessions() {
-        log.info(this.sessionContainer.gameSessions.toString());
+        log.info(this.gameSessions.toString());
     }
 
 

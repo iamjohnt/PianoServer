@@ -1,6 +1,6 @@
 package com.piano.server;
 
-import com.piano.server.game.session.GameSessionContainer;
+import com.piano.server.game.session.GameSession;
 import com.piano.server.game.util.*;
 import com.piano.server.stomp.Controller;
 import com.piano.server.stomp.response.*;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class ControllerTest {
     @BeforeEach
     void setUp() {
         this.controller = new Controller();
-        this.controller.setGameSessions(new GameSessionContainer());
+        this.controller.setGameSessions(new HashMap<String, GameSession>());
         this.controller.setGameState(new GameState(GameState.State.UNSTARTED));
         this.sessionIdTest = "qwerasdf1234";
         this.defaultSettings = new GameSettingsSubmission()

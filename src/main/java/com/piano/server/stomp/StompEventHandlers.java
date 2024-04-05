@@ -52,7 +52,7 @@ public class StompEventHandlers {
 
     @Scheduled(fixedRate = 10000)
     private void printSessions() {
-        log.debug(this.sessionContainer.gameSessions.toString());
+        log.info(this.sessionContainer.gameSessions.toString());
     }
 
 
